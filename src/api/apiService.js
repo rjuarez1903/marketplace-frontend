@@ -13,3 +13,12 @@ export const getServices = async () => {
     throw error;
   }
 };
+
+export const getPublicUserData = async (userId) => {
+  try {
+    const response = await axiosInstance.get(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
