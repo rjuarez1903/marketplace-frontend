@@ -49,7 +49,7 @@ export const Classes = () => {
   }, [filter, services]);
 
   return (
-    <div className="container mx-auto mt-16">
+    <div className="container mx-auto">
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-3">
           <FilterBar onFilterChange={handleFilterChange} />
@@ -66,7 +66,9 @@ export const Classes = () => {
           ) : (
             filteredServices.map((service) => (
               <ServiceCard
-                key={service.id}
+                key={service._id}
+                id={service._id}
+                userId={service.userId}
                 name={service.name}
                 cost={service.cost}
                 frequency={service.frequency}

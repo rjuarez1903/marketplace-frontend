@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Nav = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState({ user: "Rodrigo" });
 
   return (
-    <nav className="flex-between w-full mb-16 pt-3 container mx-auto">
-      <a href="/" className="flex gap-2 flex-center">
+    <nav className="flex-between w-full pt-3 container mx-auto px-5 sm:px-0 z-50">
+      <NavLink className="flex gap-2 flex-center" to="/">
         <img
           src="/assets/images/react.svg"
           alt="logo"
@@ -15,29 +16,32 @@ const Nav = () => {
           className="object-contain"
         />
         <p className="logo_text">Marketplace</p>
-      </a>
+      </NavLink>
 
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <a href="/create-prompt" className="black_btn">
-              Create Post
-            </a>
+            <NavLink
+              to="/crear-clase"
+              className="black_btn uppercase font-bold"
+            >
+              Crear clase
+            </NavLink>
 
             <button type="button" className="outline_btn">
               Sign Out
             </button>
 
-            <a href="/profile">
+            <NavLink href="/perfil">
               <img
-                src={session?.user.image}
+                src="/assets/images/profile.jpg"
                 width={37}
                 height={37}
                 className="rounded-full"
-                alt="profile"
+                alt="perfil"
               />
-            </a>
+            </NavLink>
           </div>
         ) : (
           <>
@@ -57,30 +61,30 @@ const Nav = () => {
         {session?.user ? (
           <div className="flex">
             <img
-              src={session?.user.image}
+              src="/assets/images/profile.jpg"
               width={37}
               height={37}
               className="rounded-full"
-              alt="profile"
+              alt="perfil"
               onClick={() => setToggleDropdown(!toggleDropdown)}
             />
 
             {toggleDropdown && (
               <div className="dropdown">
-                <a
-                  href="/profile"
+                <NavLink
+                  to="/mi-perfil"
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
-                  My Profile
-                </a>
-                <a
-                  href="/create-prompt"
+                  Mi Perfil
+                </NavLink>
+                <NavLink
+                  href="/crear-clase"
                   className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
-                  Create Prompt
-                </a>
+                  Crear Clase
+                </NavLink>
                 <button
                   type="button"
                   onClick={() => {

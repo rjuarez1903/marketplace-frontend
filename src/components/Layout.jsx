@@ -1,17 +1,18 @@
-import React from "react";
 import Nav from "./Nav";
 import Footer from "./Footer";
 
 const Layout = ({ children }) => {
   return (
-    <React.Fragment>
+    <div className="flex flex-col min-h-screen">
       <Nav />
-      <div className="main">
+      <div className="main my-16">
         <div className="gradient"></div>
         <main className="app">{children}</main>
       </div>
-      <Footer />
-    </React.Fragment>
+      <div className="mt-auto">
+        <Footer />
+      </div>
+    </div>
   );
 };
 

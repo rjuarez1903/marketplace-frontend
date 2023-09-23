@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import Feature from "../components/Feature";
 import TestimonialCard from "../components/TestimonialCard";
 import BigFeature from "../components/BigFeature";
@@ -20,9 +21,9 @@ export const Home = () => {
           Marketplace es una plataforma que te permite encontrar profesores de
           programación
         </p>
-        <button className="black_btn mt-3 uppercase font-bold">
+        <NavLink className="black_btn mt-3 uppercase font-bold" to="/clases">
           Ver clases
-        </button>
+        </NavLink>
       </section>
       <section className="mt-10">
         <div className="flex flex-wrap justify-center align-center bg-gradient">

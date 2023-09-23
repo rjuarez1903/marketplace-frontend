@@ -2,12 +2,11 @@ import { Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { Home } from "./pages/Home";
-import Footer from "./components/Footer";
 import Classes from "./pages/Classes";
 import { ClassDetail } from "./pages/ClassDetail";
 import ServiceRequest from "./pages/ServiceRequest";
-import Nav from "./components/Nav";
 import Layout from "./components/Layout";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -16,6 +15,7 @@ function App() {
         <Routes>
           {/* <Route element={<PrivateRoutes />}> */}
           <Route path="/" element={<Home />} exact />
+          <Route path="/mi-perfil" element={<Profile />} exact />
           {/* <Route path="/mi-perfil" element={<Profile />} exact /> */}
           {/* <Route path="/pagar" element={<Payment />} exact /> */}
           {/* <Route path="/depositar" element={<Deposit />} exact /> */}
