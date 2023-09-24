@@ -6,7 +6,8 @@ const Nav = () => {
   const [session, setSession] = useState({ user: "Rodrigo" });
 
   return (
-    <nav className="flex-between w-full pt-3 container mx-auto px-5 sm:px-0 z-50">
+    // <div className="shadow-lg py-6 bg-white rounded-3xl">
+    <nav className="flex-between w-full pt-3 container mx-auto px-5 z-50 ">
       <NavLink className="flex gap-2 flex-center" to="/">
         <img
           src="/assets/images/react.svg"
@@ -110,6 +111,7 @@ const Nav = () => {
         )}
       </div>
     </nav>
+    // </div>
   );
 };
 

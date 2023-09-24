@@ -49,17 +49,27 @@ export const Classes = () => {
   }, [filter, services]);
 
   return (
-    <div className="container mx-auto">
-      <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-3">
+    <div className="container mx-auto px-5">
+      <form className="relative w-full mx-auto max-w-3xl mb-10">
+        <input
+          type="text"
+          placeholder="Buscá las clases que necesitás"
+          // value={searchText}
+          // onChange={handleSearchChange}
+          required
+          className="search_input peer"
+        />
+      </form>
+      <div className="lg:grid lg:grid-cols-12 lg:gap-4">
+        <div className="lg:col-span-3">
           <FilterBar onFilterChange={handleFilterChange} />
         </div>
-        <div className="col-span-9 prompt_layout">
+        <div className="lg:col-span-9 prompt_layout mt-10 lg:mt-0">
           {loading ? (
             <Loader />
           ) : filteredServices.length === 0 ? ( // Verificar si no hay resultados
-            <div className="col-span-12 w-full">
-              <p className="text-lg">
+            <div className="flex items-center justify-center h-full w-full">
+              <p className="text-lg text-center font-bold">
                 No se encontraron resultados para los filtros seleccionados.
               </p>
             </div>

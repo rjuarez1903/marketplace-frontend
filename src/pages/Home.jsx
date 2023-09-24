@@ -8,7 +8,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 export const Home = () => {
   return (
-    <div className="pb-16">
+    <div>
       <section className="w-full flex-center flex-col px-5 lg:px-0">
         <h1 className="head_text text-center">
           Aprendé a programar
@@ -27,7 +27,7 @@ export const Home = () => {
       </section>
       <section className="mt-10">
         <div className="flex flex-wrap justify-center align-center bg-gradient">
-          <div className="py-16 grid md:grid-cols-3 gap-5 container mx-auto">
+          <div className="py-16 grid md:grid-cols-3 gap-5 px-5 container mx-auto">
             <Feature
               icon={
                 <CalendarMonthIcon sx={{ fontSize: "80px", color: "#FFF" }} />
@@ -50,7 +50,7 @@ export const Home = () => {
           </div>
         </div>
         <div>
-          <div className="mt-16 grid md:grid-cols-3 gap-5 px-5 lg:px-0 container mx-auto">
+          <div className="mt-16 grid md:grid-cols-3 gap-5 px-5 container mx-auto">
             <TestimonialCard
               src="../public/assets/images/testimonial1.jpg"
               name="Rodrigo Juarez"
@@ -68,10 +68,8 @@ export const Home = () => {
             />
           </div>
         </div>
-        <div className="mt-16 px-5 lg:px-0">
-          <div className="container mx-auto">
-            <BigFeature />
-          </div>
+        <div className="mt-16 px-5 container mx-auto">
+          <BigFeature />
         </div>
       </section>
     </div>

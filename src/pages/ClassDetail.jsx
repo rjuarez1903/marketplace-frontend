@@ -34,7 +34,7 @@ export const ClassDetail = () => {
   }, [id]);
 
   return (
-    <div className="container mx-auto px-5 lg:px-0">
+    <div className="container mx-auto px-5">
       {loading ? (
         <div>
           <Loader />

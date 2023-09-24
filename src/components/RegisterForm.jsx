@@ -109,8 +109,6 @@ const RegisterForm = () => {
         </div>
 
         <div className="flex-end mx-3 mb-5 gap-4">
-          <a href="/" className="text-gray-500 text-sm" />
-          Cancel
           <button
             type="submit"
             disabled={submitting}

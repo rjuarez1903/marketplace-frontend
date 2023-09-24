@@ -1,7 +1,7 @@
 const Profile = () => {
   return (
     <div>
-      <section className="container mx-auto px-5 lg:px-0">
+      <section className="container mx-auto px-5">
         <h1 className="head_text text-left">
           <span className="green_gradient">Mi Perfil</span>
         </h1>
@@ -101,11 +101,9 @@ const Profile = () => {
                 </div>
               </div>
               <div className="flex-end mx-3 mb-5 gap-4">
-                <a href="/" className="text-gray-500 text-sm" />
-                Cancel
                 <button
                   type="submit"
-                //   disabled={submitting}
+                  //   disabled={submitting}
                   className="px-5 py-1.5 text-sm bg-primary-orange rounded-md text-white uppercase"
                 >
                   {/* {submitting ? `${type}ing...` : type} */}
