@@ -11,7 +11,7 @@ const ServiceDetail = (props) => {
       <div className="flex justify-between items-start gap-5">
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
           <div className="flex flex-col">
-            <h2 className="font-satoshi font-bold text-xl md:text-2xl text-blue-900">
+            <h2 className="font-satoshi font-bold text-3xl text-blue-900">
               {props.name}
             </h2>
             <p className="font-inter text-base md:text-lg text-gray-600">
@@ -23,7 +23,7 @@ const ServiceDetail = (props) => {
       <p className="my-4 font-satoshi text-base md:text-lg text-gray-700">
         {props.description}
       </p>
-      <p className="font-inter text-base md:text-lg blue_gradient cursor-pointer uppercase">
+      <p className="font-inter text-md blue_gradient cursor-pointer uppercase">
         #{props.category}
       </p>
       <div className="mt-4">
@@ -36,12 +36,14 @@ const ServiceDetail = (props) => {
         <p className="font-inter text-sm text-gray-400">
           Experiencia: {props.teacherExperience}
         </p>
-        <button
-          className="black_btn uppercase mt-2 ml-auto"
-          onClick={handleClick}
-        >
-          Consultar
-        </button>
+        <div className="flex justify-end gap-2 mt-2 w-auto ml-auto">
+          <button className="outline_btn uppercase" onClick={handleClick}>
+            Comentar
+          </button>
+          <button className="black_btn uppercase" onClick={handleClick}>
+            Consultar
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ const RadioFilter = ({ name, options, selected, onChange }) => {
             <label
               className={`inline-flex items-center px-4 py-2 rounded-lg ${
                 selected === option.value
-                  ? "bg-blue-500 text-white"
+                  ? "bg-primary-orange text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               } cursor-pointer`}
             >

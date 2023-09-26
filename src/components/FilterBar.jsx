@@ -60,7 +60,7 @@ const FilterBar = ({ onFilterChange }) => {
         </button>
         <div
           className={`overflow-hidden transition-max-h duration-300 ease-in-out ${
-            isDropdownOpen ? "max-h-96" : "max-h-0"
+            isDropdownOpen ? "max-h-100" : "max-h-0"
           }`}
         >
           <RadioFilter

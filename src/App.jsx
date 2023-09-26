@@ -7,6 +7,7 @@ import { ClassDetail } from "./pages/ClassDetail";
 import ServiceRequest from "./pages/ServiceRequest";
 import Layout from "./components/Layout";
 import Profile from "./pages/Profile";
+import ServiceContracts from "./pages/ServiceContracts";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<Home />} exact />
           <Route path="/clases" element={<Classes />} exact />
           <Route path="/clases/:id" element={<ClassDetail />} exact />
+          <Route path="/contrataciones/:id" element={<ServiceContracts />} exact/>
           <Route path="/solicitud-clase/:id" element={<ServiceRequest />} exact />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

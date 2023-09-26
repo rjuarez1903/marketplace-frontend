@@ -10,10 +10,10 @@ const Nav = () => {
     <nav className="flex-between w-full pt-3 container mx-auto px-5 z-50 ">
       <NavLink className="flex gap-2 flex-center" to="/">
         <img
-          src="/assets/images/react.svg"
+          src="/logo.svg"
           alt="logo"
-          width={30}
-          height={30}
+          width={50}
+          height={50}
           className="object-contain"
         />
         <p className="logo_text">Marketplace</p>
@@ -24,10 +24,22 @@ const Nav = () => {
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <NavLink
+              to="/clases"
+              className="flex items-center font-bold text-gray-800 hover:text-orange-600"
+            >
+              Clases
+            </NavLink>
+            <NavLink
               to="/crear-clase"
-              className="black_btn uppercase font-bold"
+              className="flex items-center font-bold text-gray-800 hover:text-orange-600"
             >
               Crear clase
+            </NavLink>
+            <NavLink
+              to="/mi-perfil"
+              className="flex items-center font-bold text-gray-800 hover:text-orange-600"
+            >
+              Mi perfil
             </NavLink>
 
             <button type="button" className="outline_btn">

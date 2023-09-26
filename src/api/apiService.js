@@ -47,3 +47,30 @@ export const getClassDetails = (classId) => {
       throw error;
     });
 };
+
+// export const getUnblockedComments = (classId) => {
+//   return axiosInstance
+//     .get(`/services/${classId}/comments`)
+//     .then((response) => response.data)
+//     .catch((error) => {
+//       throw error;
+//     });
+// }
+
+export const getServiceContracts = (classId) => {
+  return axiosInstance
+    .get(`/serviceContracts/${classId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
+export const updateServiceContract = (classId, data) => { 
+  return axiosInstance
+    .patch(`/serviceContracts/${classId}`, data)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}

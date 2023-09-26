@@ -3,6 +3,7 @@ import FilterBar from "../components/FilterBar";
 import ServiceCard from "../components/ServiceCard";
 import Loader from "../components/Loader/Loader";
 import { getServices } from "../api/apiService";
+import SearchIcon from "@mui/icons-material/Search";
 
 export const Classes = () => {
   const [services, setServices] = useState([]);
@@ -68,9 +69,10 @@ export const Classes = () => {
           {loading ? (
             <Loader />
           ) : filteredServices.length === 0 ? ( // Verificar si no hay resultados
-            <div className="flex items-center justify-center h-full w-full">
+            <div className="flex flex-col items-center justify-center h-full w-full">
+              <SearchIcon sx={{ fontSize: "80px" }} />
               <p className="text-lg text-center font-bold">
-                No se encontraron resultados para los filtros seleccionados.
+                No se encontraron resultados para los filtros seleccionados
               </p>
             </div>
           ) : (

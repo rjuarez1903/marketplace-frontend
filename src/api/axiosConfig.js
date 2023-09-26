@@ -13,6 +13,8 @@ axiosInstance.interceptors.request.use(
   (config) => {
     // Puedes realizar modificaciones en la solicitud antes de enviarla, como agregar encabezados personalizados
     // Ejemplo: config.headers['Authorization'] = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGVjYzc3Y2I0NzI4MzAwOWExMzNhZGMiLCJpYXQiOjE2OTU2ODg5NzIsImV4cCI6MTY5NTY4OTg3Mn0.diPf9TnXdsT2qI2i6uJYyxyLQFU-jsoawSoVG0PktLo`;
+    // console.log('Solicitud enviada:', config);
     return config;
   },
   (error) => {
