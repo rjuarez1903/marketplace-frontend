@@ -16,7 +16,7 @@ const NavBar = () => {
             height={50}
             className="object-contain"
           />
-          <p className="logo_text">Marketplace</p>
+          <p className="logo_text">EduHub</p>
         </NavLink>
         <MobileNav session={session} />
         <DesktopNav session={session} />

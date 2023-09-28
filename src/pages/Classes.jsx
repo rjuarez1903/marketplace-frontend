@@ -4,8 +4,9 @@ import ServiceCard from "../components/ServiceCard";
 import Loader from "../components/Loader/Loader";
 import { getServices } from "../api/apiService";
 import SearchIcon from "@mui/icons-material/Search";
+import MessageWithIcon from "../components/MessageWithIcon";
 
-export const Classes = () => {
+const Classes = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState({
@@ -14,9 +15,14 @@ export const Classes = () => {
     frequency: "Todos",
   });
   const [filteredServices, setFilteredServices] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
   };
 
   useEffect(() => {
@@ -26,7 +32,7 @@ export const Classes = () => {
         setServices(servicesData);
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching services:", error);
       }
     };
     fetchServices();
@@ -34,20 +40,76 @@ export const Classes = () => {
 
   useEffect(() => {
     const applyFilters = () => {
+      const {
+        category: filterCategory,
+        classType: filterClassType,
+        frequency: filterFrequency,
+      } = filter;
+
       const filtered = services.filter((service) => {
+        const { category, type: classType, frequency } = service;
         return (
-          (filter.category === "Todos" ||
-            service.category === filter.category) &&
-          (filter.classType === "Todos" || service.type === filter.classType) &&
-          (filter.frequency === "Todos" ||
-            service.frequency === filter.frequency)
+          (filterCategory === "Todos" || category === filterCategory) &&
+          (filterClassType === "Todos" || classType === filterClassType) &&
+          (filterFrequency === "Todos" || frequency === filterFrequency)
         );
       });
+
       setFilteredServices(filtered);
     };
 
     applyFilters();
   }, [filter, services]);
+
+  useEffect(() => {
+    const filteredBySearchAndCategory = services.filter((service) => {
+      const { category, type: classType, frequency, name } = service;
+      const categoryMatch =
+        filter.category === "Todos" || category === filter.category;
+      const classTypeMatch =
+        filter.classType === "Todos" || classType === filter.classType;
+      const frequencyMatch =
+        filter.frequency === "Todos" || frequency === filter.frequency;
+      const searchTextMatch = name
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
+      return (
+        categoryMatch && classTypeMatch && frequencyMatch && searchTextMatch
+      );
+    });
+    setFilteredServices(filteredBySearchAndCategory);
+  }, [searchText, filter, services]);
+
+  let content = null;
+
+  if (loading) {
+    content = <Loader />;
+  } else if (filteredServices.length === 0) {
+    content = (
+      <MessageWithIcon
+        icon={<SearchIcon sx={{ fontSize: '60px', color: 'rgb(75, 85, 99)' }} />}
+        message="¡Oops! Parece que no encontramos resultados para los filtros seleccionados. ¿Querés probar con otros?"
+      />
+    );
+  } else {
+    content = (
+      <ul className="prompt_layout">
+        {filteredServices.map((service) => (
+          <li key={service._id}>
+            <ServiceCard
+              id={service._id}
+              userId={service.userId}
+              name={service.name}
+              cost={service.cost}
+              frequency={service.frequency}
+              description={service.description}
+              category={service.category}
+            />
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <div className="container mx-auto px-5">
@@ -55,8 +117,8 @@ export const Classes = () => {
         <input
           type="text"
           placeholder="Buscá las clases que necesitás"
-          // value={searchText}
-          // onChange={handleSearchChange}
+          value={searchText}
+          onChange={handleSearchChange}
           required
           className="search_input peer"
         />
@@ -65,31 +127,7 @@ export const Classes = () => {
         <div className="lg:col-span-3">
           <FilterBar onFilterChange={handleFilterChange} />
         </div>
-        <div className="lg:col-span-9 prompt_layout mt-10 lg:mt-0">
-          {loading ? (
-            <Loader />
-          ) : filteredServices.length === 0 ? ( // Verificar si no hay resultados
-            <div className="flex flex-col items-center justify-center h-full w-full">
-              <SearchIcon sx={{ fontSize: "80px" }} />
-              <p className="text-lg text-center font-bold">
-                No se encontraron resultados para los filtros seleccionados
-              </p>
-            </div>
-          ) : (
-            filteredServices.map((service) => (
-              <ServiceCard
-                key={service._id}
-                id={service._id}
-                userId={service.userId}
-                name={service.name}
-                cost={service.cost}
-                frequency={service.frequency}
-                description={service.description}
-                category={service.category}
-              />
-            ))
-          )}
-        </div>
+        <div className="lg:col-span-9 mt-10 lg:mt-0">{content}</div>
       </div>
     </div>
   );

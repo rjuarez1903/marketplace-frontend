@@ -36,7 +36,7 @@ const ServiceDetail = (props) => {
         <p className="font-inter text-sm text-gray-400">
           Experiencia: {props.teacherExperience}
         </p>
-        <div className="flex justify-end gap-2 mt-2 w-auto ml-auto">
+        <div className="flex justify-end gap-2 mt-4 w-auto ml-auto">
           <button className="outline_btn uppercase" onClick={handleClick}>
             Comentar
           </button>

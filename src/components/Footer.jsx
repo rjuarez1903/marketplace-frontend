@@ -14,7 +14,7 @@ const Footer = () => {
         />
       <div className="p-5 flex flex-col md:flex-row justify-between">
         <p className="text-sm">
-          © 2023 Marketplace. Todos los derechos reservados.
+          © 2023 EduHub. Todos los derechos reservados.
         </p>
         <ul>
           <li>

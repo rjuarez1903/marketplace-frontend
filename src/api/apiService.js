@@ -48,14 +48,14 @@ export const getClassDetails = (classId) => {
     });
 };
 
-// export const getUnblockedComments = (classId) => {
-//   return axiosInstance
-//     .get(`/services/${classId}/comments`)
-//     .then((response) => response.data)
-//     .catch((error) => {
-//       throw error;
-//     });
-// }
+export const getUnblockedComments = (classId) => {
+  return axiosInstance
+    .get(`/comments/${classId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 
 export const getServiceContracts = (classId) => {
   return axiosInstance
@@ -64,13 +64,13 @@ export const getServiceContracts = (classId) => {
     .catch((error) => {
       throw error;
     });
-}
+};
 
-export const updateServiceContract = (classId, data) => { 
+export const updateServiceContract = (classId, data) => {
   return axiosInstance
     .patch(`/serviceContracts/${classId}`, data)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
     });
-}
+};

@@ -18,7 +18,7 @@ export const Home = () => {
           </span>
         </h1>
         <p className="desc text-center">
-          Marketplace es una plataforma que te permite encontrar profesores de
+          EduHub es una plataforma que te permite encontrar profesores de
           programación
         </p>
         <NavLink className="black_btn mt-3" to="/clases">
