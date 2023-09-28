@@ -15,10 +15,10 @@ const BigFeature = () => {
         </p>
         <span className="inline-block">
           <NavLink
-            className="outline_btn mt-6 uppercase font-bold "
+            className="outline_btn mt-6"
             to="/register"
           >
-            Registrate ahora
+            Registrate Ahora
           </NavLink>
         </span>
       </div>

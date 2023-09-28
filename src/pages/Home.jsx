@@ -9,7 +9,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 export const Home = () => {
   return (
     <div>
-      <section className="w-full flex-center flex-col px-5 lg:px-0">
+      <section className="w-full flex-center flex-col px-5 container mx-auto">
         <h1 className="head_text text-center">
           Aprendé a programar
           <br />
@@ -21,12 +21,12 @@ export const Home = () => {
           Marketplace es una plataforma que te permite encontrar profesores de
           programación
         </p>
-        <NavLink className="black_btn mt-3 uppercase font-bold" to="/clases">
-          Ver clases
+        <NavLink className="black_btn mt-3" to="/clases">
+          Ver Clases
         </NavLink>
       </section>
       <section className="mt-10">
-        <div className="flex flex-wrap justify-center align-center bg-gradient">
+        <div className="bg-gradient">
           <div className="py-16 grid md:grid-cols-3 gap-5 px-5 container mx-auto">
             <Feature
               icon={

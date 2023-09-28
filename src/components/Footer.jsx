@@ -3,8 +3,16 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 
 const Footer = () => {
   return (
-    <footer className="p-5 bg-white">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between">
+    <footer className=" bg-white">
+      <div className="container mx-auto">
+      <img
+          src="/logo.svg"
+          alt="logo"
+          width={50}
+          height={50}
+          className="object-contain mx-5"
+        />
+      <div className="p-5 flex flex-col md:flex-row justify-between">
         <p className="text-sm">
           © 2023 Marketplace. Todos los derechos reservados.
         </p>
@@ -22,6 +30,7 @@ const Footer = () => {
             </a>
           </li>
         </ul>
+      </div>
       </div>
     </footer>
   );
