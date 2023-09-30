@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const ServiceCard = (props) => {
   return (
     <div className="prompt_card border border-white/30 [background:var(--bg)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_8px_rgba(30,58,138,0.2)]">
-      <NavLink to={`/clases/${props.id}`}>
+      <NavLink to={`/clases/detalle/${props.id}`}>
         <div className="flex justify-between items-start gap-5">
           <div className="flex-1 flex justify-start items-center gap-3">
             <div className="flex flex-col">

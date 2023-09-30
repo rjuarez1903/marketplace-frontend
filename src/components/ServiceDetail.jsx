@@ -37,10 +37,10 @@ const ServiceDetail = (props) => {
           Experiencia: {props.teacherExperience}
         </p>
         <div className="flex justify-end gap-2 mt-4 w-auto ml-auto">
-          <button className="outline_btn uppercase" onClick={handleClick}>
+          <button className="outline_btn" onClick={handleClick}>
             Comentar
           </button>
-          <button className="black_btn uppercase" onClick={handleClick}>
+          <button className="black_btn" onClick={handleClick}>
             Consultar
           </button>
         </div>

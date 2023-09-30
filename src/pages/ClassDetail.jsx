@@ -58,7 +58,7 @@ export const ClassDetail = () => {
             teacherDegree={user.degree}
             teacherExperience={user.experience}
           />
-          <h2 className="sub_text text-left">
+          <h2 className="mb-5 sub_text text-left">
             <span className="green_gradient">Comentarios</span>
           </h2>
           {comments.length === 0 ? (
@@ -71,7 +71,7 @@ export const ClassDetail = () => {
               message="¡Oops! Parece que no hay comentarios aún. !Comentá antes que nadie!"
             />
           ) : (
-            <ul className="mt-5 grid grid-cols-12 gap-4">
+            <ul className="grid grid-cols-12 gap-4">
               {comments.map((comment) => (
                 <li key={comment._id} className="col-span-12 lg:col-span-4">
                   <Comment

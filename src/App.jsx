@@ -24,8 +24,8 @@ function App() {
           {/* <Route path="/plazo-fijo" element={<FixedTerm />} /> */}
           {/* </Route> */}
           <Route path="/" element={<Home />} exact />
-          <Route path="/clases" element={<Classes />} exact />
-          <Route path="/clases/:id" element={<ClassDetail />} exact />
+          <Route path="/clases/:category" element={<Classes />} exact />
+          <Route path="/clases/detalle/:id" element={<ClassDetail />} exact />
           <Route path="/contrataciones/:id" element={<ServiceContracts />} exact/>
           <Route path="/solicitud-clase/:id" element={<ServiceRequest />} exact />
           <Route path="/login" element={<Login />} />

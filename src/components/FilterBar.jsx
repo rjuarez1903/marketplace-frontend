@@ -4,9 +4,8 @@ import RadioFilter from "./RadioFilter";
 
 const FilterBar = ({ onFilterChange }) => {
   const [filter, setFilter] = useState({
-    category: "Todos",
-    classType: "Todos",
-    frequency: "Todos",
+    classType: "Todas",
+    frequency: "Todas",
   });
 
   const handleFilterChange = (filterType, value) => {
@@ -15,22 +14,14 @@ const FilterBar = ({ onFilterChange }) => {
     onFilterChange(updatedFilter);
   };
 
-  const categories = [
-    { value: "Todos", label: "Todos" },
-    { value: "Front end", label: "Front End" },
-    { value: "Back end", label: "Back End" },
-    { value: "Dev ops", label: "Dev Ops" },
-    { value: "Data science", label: "Data Science" },
-  ];
-
   const classTypes = [
-    { value: "Todos", label: "Todos" },
+    { value: "Todas", label: "Todas" },
     { value: "individual", label: "Individual" },
     { value: "group", label: "Grupal" },
   ];
 
   const frequencies = [
-    { value: "Todos", label: "Todos" },
+    { value: "Todas", label: "Todas" },
     { value: "unique", label: "Única" },
     { value: "weekly", label: "Semanal" },
     { value: "monthly", label: "Mensual" },
@@ -64,12 +55,6 @@ const FilterBar = ({ onFilterChange }) => {
           }`}
         >
           <RadioFilter
-            name="category"
-            options={categories}
-            selected={filter.category}
-            onChange={handleFilterChange}
-          />
-          <RadioFilter
             name="classType"
             options={classTypes}
             selected={filter.classType}
@@ -85,12 +70,6 @@ const FilterBar = ({ onFilterChange }) => {
       </div>
       <div className="hidden lg:block">
         <h2 className="text-lg font-semibold mb-2">Filtrar por:</h2>
-        <RadioFilter
-          name="category"
-          options={categories}
-          selected={filter.category}
-          onChange={handleFilterChange}
-        />
         <RadioFilter
           name="classType"
           options={classTypes}

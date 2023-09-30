@@ -1,14 +1,73 @@
-import { NavLink } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 const DesktopNav = ({ session }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+  const location = useLocation();
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    closeDropdown();
+  }, [location]);
+
   return (
-    <div className="hidden sm:flex">
-      <NavLink
-        to="/clases"
-        className="flex items-center font-bold text-gray-800 hover:text-orange-600 mr-5"
-      >
-        Clases
-      </NavLink>
+    <div className="hidden sm:flex relative items-center" ref={dropdownRef}>
+      <div className="relative group cursor-pointer z-50">
+        <span
+          onClick={toggleDropdown}
+          className="flex items-center font-bold text-gray-800 mr-5 hover:text-orange-600"
+        >
+          Categorías
+        </span>
+        <div
+          className={`${
+            showDropdown ? "block" : "hidden"
+          } absolute top-full left-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg`}
+        >
+          <NavLink
+            to="/clases/front-end"
+            className="block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
+            onClick={closeDropdown}
+          >
+            Front End
+          </NavLink>
+          <NavLink
+            to="/clases/back-end"
+            className="block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
+            onClick={closeDropdown}
+          >
+            Back End
+          </NavLink>
+          <NavLink
+            to="/clases/data-science"
+            className="block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
+            onClick={closeDropdown}
+          >
+            Data Science
+          </NavLink>
+          {/* Agrega más enlaces de categorías aquí */}
+        </div>
+      </div>
       {session?.user ? (
         <div className="flex gap-3 md:gap-5">
           <NavLink

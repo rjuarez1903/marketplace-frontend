@@ -1,8 +1,10 @@
+import { translateOption } from "../utils/translateOption";
+
 const RadioFilter = ({ name, options, selected, onChange }) => {
   return (
     <div className="mb-4">
       <h3 className="font-semibold mb-2">
-        {name.charAt(0).toUpperCase() + name.slice(1)}
+        {translateOption(name).charAt(0).toUpperCase() + translateOption(name).slice(1)}
       </h3>
       <div className="flex flex-wrap -mx-2">
         {options.map((option) => (
@@ -22,7 +24,7 @@ const RadioFilter = ({ name, options, selected, onChange }) => {
                 onChange={() => onChange(name, option.value)}
                 className="sr-only"
               />
-              {option.label}
+              {translateOption(option.value)}
             </label>
           </div>
         ))}

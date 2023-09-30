@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import FilterBar from "../components/FilterBar";
 import ServiceCard from "../components/ServiceCard";
+import MessageWithIcon from "../components/MessageWithIcon";
 import Loader from "../components/Loader/Loader";
 import { getServices } from "../api/apiService";
+import { formatCategory } from "../utils/formatCategory";
 import SearchIcon from "@mui/icons-material/Search";
-import MessageWithIcon from "../components/MessageWithIcon";
+
 
 const Classes = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState({
-    category: "Todos",
-    classType: "Todos",
-    frequency: "Todos",
+    classType: "Todas",
+    frequency: "Todas",
   });
   const [filteredServices, setFilteredServices] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const { category } = useParams();
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
@@ -28,7 +31,8 @@ const Classes = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const servicesData = await getServices();
+        const formattedCategory = formatCategory(category);
+        const servicesData = await getServices(formattedCategory);
         setServices(servicesData);
         setLoading(false);
       } catch (error) {
@@ -36,22 +40,20 @@ const Classes = () => {
       }
     };
     fetchServices();
-  }, []);
+  }, [category]);
 
   useEffect(() => {
     const applyFilters = () => {
       const {
-        category: filterCategory,
         classType: filterClassType,
         frequency: filterFrequency,
       } = filter;
 
       const filtered = services.filter((service) => {
-        const { category, type: classType, frequency } = service;
+        const { type: classType, frequency } = service;
         return (
-          (filterCategory === "Todos" || category === filterCategory) &&
-          (filterClassType === "Todos" || classType === filterClassType) &&
-          (filterFrequency === "Todos" || frequency === filterFrequency)
+          (filterClassType === "Todas" || classType === filterClassType) &&
+          (filterFrequency === "Todas" || frequency === filterFrequency)
         );
       });
 
@@ -63,18 +65,16 @@ const Classes = () => {
 
   useEffect(() => {
     const filteredBySearchAndCategory = services.filter((service) => {
-      const { category, type: classType, frequency, name } = service;
-      const categoryMatch =
-        filter.category === "Todos" || category === filter.category;
+      const { type: classType, frequency, name } = service;
       const classTypeMatch =
-        filter.classType === "Todos" || classType === filter.classType;
+        filter.classType === "Todas" || classType === filter.classType;
       const frequencyMatch =
-        filter.frequency === "Todos" || frequency === filter.frequency;
+        filter.frequency === "Todas" || frequency === filter.frequency;
       const searchTextMatch = name
         .toLowerCase()
         .includes(searchText.toLowerCase());
       return (
-        categoryMatch && classTypeMatch && frequencyMatch && searchTextMatch
+       classTypeMatch && frequencyMatch && searchTextMatch
       );
     });
     setFilteredServices(filteredBySearchAndCategory);
