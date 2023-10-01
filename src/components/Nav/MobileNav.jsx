@@ -49,29 +49,29 @@ const MobileNav = ({ session }) => {
           <NavLink
             to="/clases"
             onClick={closeDropdown}
-            className="py-3 text-gray-800 hover:text-orange-600 text-3xl"
+            className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
           >
             Clases
           </NavLink>
           {session?.user ? (
             <>
               <NavLink
-                to="/"
+                to="/mis-clases"
                 onClick={closeDropdown}
-                className="py-3 text-gray-800 hover:text-orange-600 text-3xl"
+                className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
               >
                 Mis clases
               </NavLink>
               <NavLink
                 to="/mi-perfil"
-                className="py-3 text-gray-800 hover:text-orange-600 text-3xl"
+                className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
                 onClick={closeDropdown}
               >
                 Mi Perfil
               </NavLink>
               <button
                 onClick={closeDropdown}
-                className="py-3 text-gray-800 w-full hover:text-orange-600 text-3xl"
+                className="py-3 text-gray-700 w-full hover:text-orange-600 text-3xl"
               >
                 Sign Out
               </button>
@@ -81,14 +81,14 @@ const MobileNav = ({ session }) => {
               <NavLink
                 to="/login"
                 onClick={closeDropdown}
-                className="py-3 text-gray-800 hover:text-orange-600 text-3xl"
+                className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
               >
                 Sign In
               </NavLink>
               <NavLink
                 to="/register"
                 onClick={closeDropdown}
-                className="py-3 text-gray-800 hover:text-orange-600 text-3xl"
+                className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
               >
                 Registrarse
               </NavLink>

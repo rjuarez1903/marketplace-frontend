@@ -19,6 +19,15 @@ export const getServices = (category) => {
     });
 };
 
+export const getServicesByUser = () => {
+  return axiosInstance
+    .get(`/services/user`)
+    .then((response) => response.data.services)
+    .catch((error) => {
+      throw error;
+    });
+};
+
 export const getPublicUserData = (userId) => {
   return axiosInstance
     .get(`/users/${userId}`)

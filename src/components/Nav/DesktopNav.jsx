@@ -35,7 +35,7 @@ const DesktopNav = ({ session }) => {
       <div className="relative group cursor-pointer z-50">
         <span
           onClick={toggleDropdown}
-          className="flex items-center font-bold text-gray-800 mr-5 hover:text-orange-600"
+          className="flex items-center font-bold text-gray-700 mr-5 hover:text-orange-600"
         >
           Categorías
         </span>
@@ -46,7 +46,7 @@ const DesktopNav = ({ session }) => {
         >
           <NavLink
             to="/clases/front-end"
-            className="block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
+            className="rounded-t-lg block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
             onClick={closeDropdown}
           >
             Front End
@@ -65,20 +65,27 @@ const DesktopNav = ({ session }) => {
           >
             Data Science
           </NavLink>
+          <NavLink
+            to="/clases/dev-ops"
+            className="rounded-b-lg block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
+            onClick={closeDropdown}
+          >
+            Dev Ops
+          </NavLink>
           {/* Agrega más enlaces de categorías aquí */}
         </div>
       </div>
       {session?.user ? (
         <div className="flex gap-3 md:gap-5">
           <NavLink
-            to="/"
-            className="flex items-center font-bold text-gray-800 hover:text-orange-600"
+            to="/mis-clases"
+            className="flex items-center font-bold text-gray-700 hover:text-orange-600"
           >
             Mis clases
           </NavLink>
           <NavLink
             to="/mi-perfil"
-            className="flex items-center font-bold text-gray-800 hover:text-orange-600"
+            className="flex items-center font-bold text-gray-700 hover:text-orange-600"
           >
             Mi perfil
           </NavLink>

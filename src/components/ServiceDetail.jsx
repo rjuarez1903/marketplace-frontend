@@ -15,7 +15,7 @@ const ServiceDetail = (props) => {
               {props.name}
             </h2>
             <p className="font-inter text-base md:text-lg text-gray-600">
-              ${props.cost} / {props.frequency}
+              ${props.cost} / {props.frequency} / {props.duration} horas
             </p>
           </div>
         </div>

@@ -102,8 +102,10 @@ const Classes = () => {
               name={service.name}
               cost={service.cost}
               frequency={service.frequency}
+              duration={service.duration || ""}
               description={service.description}
               category={service.category}
+              averageRating={service.averageRating}
             />
           </li>
         ))}
@@ -116,7 +118,7 @@ const Classes = () => {
       <form className="relative w-full mx-auto max-w-3xl mb-10">
         <input
           type="text"
-          placeholder="Buscá las clases que necesitás"
+          placeholder={`Buscá las clases de ${formatCategory(category)} que necesitás`}
           value={searchText}
           onChange={handleSearchChange}
           required

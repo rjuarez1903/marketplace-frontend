@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import StarRating from "./StarRating";
 
 const ServiceCard = (props) => {
   return (
@@ -11,10 +12,13 @@ const ServiceCard = (props) => {
                 {props.name}
               </h2>
               <p className="font-inter text-lg text-gray-600">
-                ${props.cost} / {props.frequency}
+                ${props.cost} / {props.frequency} / {props.duration} horas
               </p>
             </div>
           </div>
+        </div>
+        <div className="mb-5">
+          <StarRating rating={props.averageRating} />
         </div>
         <p className="my-4 font-satoshi text-base md:text-lg text-gray-700">
           {props.description}

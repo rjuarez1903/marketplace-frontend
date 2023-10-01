@@ -52,6 +52,7 @@ export const ClassDetail = () => {
             cost={classDetail.cost}
             frequency={classDetail.frequency}
             description={classDetail.description}
+            duration={classDetail.duration || ""}
             category={classDetail.category}
             teacherFirstName={user.firstName}
             teacherLastName={user.lastName}
@@ -77,6 +78,7 @@ export const ClassDetail = () => {
                   <Comment
                     createdAt={comment.createdAt}
                     content={comment.content}
+                    rating={comment.rating || 1}
                   />
                 </li>
               ))}
