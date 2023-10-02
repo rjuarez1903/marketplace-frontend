@@ -64,6 +64,15 @@ export const getServiceContracts = (classId) => {
     });
 };
 
+export const getServiceContractsByUser = () => {
+  return axiosInstance
+    .get(`/serviceContracts/user`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
 export const updateServiceContract = (classId, data) => {
   return axiosInstance
     .patch(`/serviceContracts/${classId}`, data)

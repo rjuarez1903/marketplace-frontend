@@ -81,24 +81,29 @@ const DesktopNav = ({ session }) => {
             to="/mis-clases"
             className="flex items-center font-bold text-gray-700 hover:text-orange-600"
           >
-            Mis clases
+            Clases
           </NavLink>
           <NavLink
-            to="/mi-perfil"
+            to="/mis-contrataciones"
             className="flex items-center font-bold text-gray-700 hover:text-orange-600"
           >
-            Mi perfil
+            Contrataciones
           </NavLink>
           <button type="button" className="outline_btn">
             Sign Out
           </button>
-          <img
-            src="/assets/images/profile.jpg"
-            width={37}
-            height={37}
-            className="rounded-full"
-            alt="perfil"
-          />
+          <NavLink
+            to="/mi-perfil"
+            className="flex items-center font-bold text-gray-700 hover:text-orange-600"
+          >
+            <img
+              src="/assets/images/profile.jpg"
+              width={37}
+              height={37}
+              className="rounded-full"
+              alt="perfil"
+            />
+          </NavLink>
         </div>
       ) : (
         <div className="flex gap-3 md:gap-5">

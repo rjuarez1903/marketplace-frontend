@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const MobileNav = ({ session }) => {
@@ -12,6 +13,12 @@ const MobileNav = ({ session }) => {
 
   const closeDropdown = () => {
     setShowDropdown(false);
+  };
+
+  const closeButtonStyle = {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
   };
 
   return (
@@ -40,12 +47,9 @@ const MobileNav = ({ session }) => {
 
       {showDropdown && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-white z-50">
-          <button
-            onClick={closeDropdown}
-            className="absolute top-0 right-0 pr-7 pt-6 text-gray-600 hover:text-gray-800 focus:outline-none"
-          >
+          <IconButton onClick={closeDropdown} style={closeButtonStyle}>
             <CloseIcon />
-          </button>
+          </IconButton>
           <NavLink
             to="/clases"
             onClick={closeDropdown}

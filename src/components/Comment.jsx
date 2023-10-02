@@ -8,7 +8,7 @@ const Comment = ({ createdAt, rating, content }) => {
         {moment(createdAt).format("DD/MM/YYYY HH:mm")}
       </h3>
       <div className="mb-5">
-      <StarRating rating={rating} />
+        <StarRating rating={rating} />
       </div>
       <p>{content}</p>
     </div>

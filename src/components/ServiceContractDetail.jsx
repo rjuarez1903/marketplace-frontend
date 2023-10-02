@@ -35,20 +35,23 @@ const ServiceContractDetail = ({ contract }) => {
 
   return (
     <div className="prompt_card">
-      <h2 className="font-satoshi font-bold text-3xl text-blue-900">
-        {contract.contactEmail}
+      <h2 className="font-satoshi font-bold text-3xl text-blue-900 mb-3">
+        {contract.serviceName}
       </h2>
+      <p className="font-inter text-xl text-gray-600 ">
+        Email: {contract.contactEmail}
+      </p>
       <p className="font-inter text-lg text-gray-600 mb-3">
         Teléfono: {contract.phoneNumber}
       </p>
-      <p className="font-satoshi text-base md:text-lg text-gray-700">
+      <p className="font-satoshi text-base md:text-lg text-gray-700 mb-3">
         {contract.message}
       </p>
       <div className="mb-4">
         <p className="font-satoshi text-base md:text-lg text-gray-700">
           Horario de contacto preferido: {contract.preferredContactTime}
         </p>
-        <p className="mt-5 font-inter text-right">
+        <p className="mt-5 font-inter text-right flex flex-col md:flex-row justify-between items-start md:items-center">
           <span className="font-semibold">Estado del contrato:</span>{" "}
           {isEditing ? (
             <select
@@ -69,20 +72,17 @@ const ServiceContractDetail = ({ contract }) => {
             </span>
           )}
         </p>
-        <div className="flex justify-end mt-2">
+        <div className="flex justify-end mt-3">
           {isEditing ? (
             <button
-              className="black_btn uppercase"
+              className="black_btn"
               onClick={handleUpdateStatus}
               disabled={isUpdating}
             >
               {isUpdating ? "Actualizando..." : "Confirmar"}
             </button>
           ) : (
-            <button
-              className="outline_btn uppercase"
-              onClick={() => setIsEditing(true)}
-            >
+            <button className="outline_btn" onClick={() => setIsEditing(true)}>
               Editar Estado
             </button>
           )}

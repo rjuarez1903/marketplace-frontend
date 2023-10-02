@@ -28,7 +28,7 @@ function App() {
           <Route path="/" element={<Home />} exact />
           <Route path="/clases/:category" element={<Classes />} exact />
           <Route path="/clases/detalle/:id" element={<ClassDetail />} exact />
-          <Route path="/contrataciones/:id" element={<ServiceContracts />} exact/>
+          <Route path="/mis-contrataciones/" element={<ServiceContracts />} exact/>
           <Route path="/solicitud-clase/:id" element={<ServiceRequest />} exact />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

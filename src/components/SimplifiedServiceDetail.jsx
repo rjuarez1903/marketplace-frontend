@@ -1,4 +1,14 @@
-const ServiceDetail = (props) => {
+const SimplifiedServiceDetail = (props) => {
+  const handleClickEdit = () => {
+    // Lógica para editar el servicio, por ejemplo, redirigir a la página de edición.
+    console.log("Editar servicio");
+  };
+
+  const handleClickDelete = () => {
+    // Lógica para eliminar el servicio, como mostrar un modal de confirmación.
+    console.log("Eliminar servicio");
+  };
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
@@ -20,21 +30,12 @@ const ServiceDetail = (props) => {
         #{props.category}
       </p>
       <div className="mt-4">
-        <p className="font-inter text-sm text-gray-400">
-          Docente: {props.teacherFirstName} {props.teacherLastName}
-        </p>
-        <p className="font-inter text-sm text-gray-400">
-          Título: {props.teacherDegree}
-        </p>
-        <p className="font-inter text-sm text-gray-400">
-          Experiencia: {props.teacherExperience}
-        </p>
         <div className="flex justify-end gap-2 mt-4 w-auto ml-auto">
-          <button className="outline_btn" onClick={props.onCommentClick}>
-            Comentar
+          <button className="outline_btn" onClick={handleClickEdit}>
+            Editar
           </button>
-          <button className="black_btn" onClick={props.onConsultClick}>
-            Consultar
+          <button className="black_btn" onClick={handleClickDelete}>
+            Eliminar
           </button>
         </div>
       </div>
@@ -42,4 +43,4 @@ const ServiceDetail = (props) => {
   );
 };
 
-export default ServiceDetail;
+export default SimplifiedServiceDetail;
