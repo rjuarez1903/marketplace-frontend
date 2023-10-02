@@ -3,9 +3,9 @@ import { useState } from "react";
 const Form = () => {
   const [submitting, setSubmitting] = useState(false);
   const [contactInfo, setContactInfo] = useState({
-    email: "",
-    phone: "",
-    contactTime: "",
+    contactEmail: "",
+    phoneNumber: "",
+    preferredContactTime: "", // Esta será la opción seleccionada
     message: "",
   });
 
@@ -26,14 +26,14 @@ const Form = () => {
       className="w-full max-w-2xl flex flex-col gap-7"
     >
       <div>
-        <label htmlFor="email" className="font-inter text-sm text-gray-600">
+        <label htmlFor="contactEmail" className="font-inter text-sm text-gray-600">
           Correo Electrónico:
         </label>
         <input
           type="email"
-          id="email"
-          name="email"
-          value={contactInfo.email}
+          id="contactEmail"
+          name="contactEmail"
+          value={contactInfo.contactEmail}
           onChange={handleInputChange}
           className="border border-gray-300 rounded p-2 w-full"
           required
@@ -41,14 +41,14 @@ const Form = () => {
       </div>
 
       <div>
-        <label htmlFor="phone" className="font-inter text-sm text-gray-600">
+        <label htmlFor="phoneNumber" className="font-inter text-sm text-gray-600">
           Teléfono:
         </label>
         <input
           type="tel"
-          id="phone"
-          name="phone"
-          value={contactInfo.phone}
+          id="phoneNumber"
+          name="phoneNumber"
+          value={contactInfo.phoneNumber}
           onChange={handleInputChange}
           className="border border-gray-300 rounded p-2 w-full"
         />
@@ -56,19 +56,22 @@ const Form = () => {
 
       <div className="my-4">
         <label
-          htmlFor="contactTime"
+          htmlFor="preferredContactTime"
           className="font-inter text-sm text-gray-600"
         >
           Horario de Preferencia para el Contacto:
         </label>
-        <input
-          type="text"
-          id="contactTime"
-          name="contactTime"
-          value={contactInfo.contactTime}
+        <select
+          id="preferredContactTime"
+          name="preferredContactTime"
+          value={contactInfo.preferredContactTime}
           onChange={handleInputChange}
           className="border border-gray-300 rounded p-2 w-full"
-        />
+        >
+          <option value="morning">Mañana</option>
+          <option value="afternoon">Tarde</option>
+          <option value="evening">Noche</option>
+        </select>
       </div>
 
       <div className="my-4">

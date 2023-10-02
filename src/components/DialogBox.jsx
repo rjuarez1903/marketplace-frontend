@@ -1,11 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 const DialogBox = ({ title, content, onClose, open }) => {
+  const modalRef = useRef(null);
+
   const closeDialog = () => {
     onClose && onClose();
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        closeDialog();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     // Al abrir el diálogo, deshabilita el desplazamiento en el cuerpo
@@ -29,7 +43,10 @@ const DialogBox = ({ title, content, onClose, open }) => {
         <>
           <div className="fixed inset-0 bg-black opacity-40 z-40"></div>
           <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 shadow-md rounded-3xl border border-gray-300 relative">
+            <div
+              ref={modalRef} // Referencia al div del modal
+              className="bg-white rounded-lg p-6 shadow-md rounded-3xl border border-gray-300 relative"
+            >
               <IconButton
                 aria-label="Cerrar"
                 onClick={closeDialog}

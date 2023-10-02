@@ -62,7 +62,7 @@ export const CommentForm = () => {
       </div>
 
       <div className="my-4">
-        <label htmlFor="message" className="font-inter text-sm text-gray-600">
+        <label htmlFor="content" className="font-inter text-sm text-gray-600">
           Mensaje:
         </label>
         <textarea
@@ -77,9 +77,9 @@ export const CommentForm = () => {
       </div>
 
       <div className="">
-        <label htmlFor="rating" className="font-inter text-sm text-gray-600">
+        <p className="font-inter text-sm text-gray-600">
           Calificación
-        </label>
+        </p>
         <div className="flex space-x-2">
           {renderStars(5)}
         </div>
@@ -89,7 +89,7 @@ export const CommentForm = () => {
         <button
           type="submit"
           disabled={submitting}
-          className="px-5 py-1.5 text-sm bg-primary-orange rounded-md text-white uppercase"
+          className="px-5 py-1.5 text-sm bg-primary-orange rounded-md text-white"
         >
           Enviar
         </button>
