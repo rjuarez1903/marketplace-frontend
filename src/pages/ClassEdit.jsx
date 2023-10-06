@@ -11,7 +11,7 @@ const ClassEdit = () => {
     frequency: myClass.frequency,
     cost: myClass.cost,
     type: myClass.type,
-    duration: myClass.duration,
+    duration: myClass.duration * 60,
   };
 
   return (

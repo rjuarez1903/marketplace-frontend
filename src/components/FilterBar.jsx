@@ -8,7 +8,7 @@ const FilterBar = ({ onFilterChange, onSortChange }) => {
     frequency: "Todas",
   });
 
-  const [sortOrder, setSortOrder] = useState("desc"); // Nuevo estado para el ordenamiento (descendente por defecto)
+  const [sortOrder, setSortOrder] = useState(""); 
 
   const handleFilterChange = (filterType, value) => {
     const updatedFilter = { ...filter, [filterType]: value };

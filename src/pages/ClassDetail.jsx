@@ -13,6 +13,7 @@ import { getClassDetails } from "../api/apiService";
 import { getUnblockedComments } from "../api/apiService";
 import Form from "../components/Form";
 import { CommentForm } from "../components/CommentForm";
+import CustomSnackbar from "../components/CustomSnackbar";
 
 export const ClassDetail = () => {
   const [classDetail, setClassDetail] = useState(null);
@@ -22,6 +23,11 @@ export const ClassDetail = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogContent, setDialogContent] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    type: "success",
+  });
   const { id } = useParams();
 
   const handleClick = (buttonType) => {
@@ -31,9 +37,17 @@ export const ClassDetail = () => {
       setDialogContent(<CommentForm />);
     } else if (buttonType === "consult") {
       setDialogTitle("Consultar");
-      setDialogContent(<Form />);
+      setDialogContent(
+        <Form onSuccess={() => handleSuccess("Consulta enviada con éxito!")} />
+      );
     }
   };
+
+  const handleSuccess = (message) => {
+    setSnackbar({ open: true, message: message, type: "success" });
+    setIsDialogOpen(false);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -87,6 +101,12 @@ export const ClassDetail = () => {
             onClose={() => setIsDialogOpen(false)}
             onConfirm={() => setIsDialogOpen(false)}
             open={isDialogOpen}
+          />
+          <CustomSnackbar
+            message={snackbar.message}
+            type={snackbar.type}
+            open={snackbar.open}
+            onClose={() => setSnackbar({ ...snackbar, open: false })}
           />
           <h2 className="mb-5 sub_text text-left">
             <span className="green_gradient">Comentarios</span>

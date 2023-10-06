@@ -17,7 +17,7 @@ const Classes = () => {
   });
   const [filteredServices, setFilteredServices] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortOrder, setSortOrder] = useState("");
   const { category } = useParams();
 
   const handleFilterChange = (newFilter) => {
@@ -38,7 +38,9 @@ const Classes = () => {
         // const formattedCategory = formatCategory(category);
         // const servicesData = await getServices(formattedCategory);
         const servicesData = await getServices(category);
-        const publishedServices = servicesData.filter(service => service.isPublished);
+        const publishedServices = servicesData.filter(
+          (service) => service.isPublished
+        );
         setServices(publishedServices);
         setLoading(false);
       } catch (error) {
@@ -50,7 +52,7 @@ const Classes = () => {
   useEffect(() => {
     const applyFilters = () => {
       const { classType: filterClassType, frequency: filterFrequency } = filter;
-  
+
       const filtered = services.filter((service) => {
         const { type: classType, frequency, name } = service;
         const classTypeMatch =
@@ -60,7 +62,7 @@ const Classes = () => {
         const searchTextMatch = name
           .toLowerCase()
           .includes(searchText.toLowerCase());
-  
+
         return (
           classTypeMatch &&
           frequencyMatch &&
@@ -69,19 +71,18 @@ const Classes = () => {
           (filterFrequency === "Todas" || frequency === filterFrequency)
         );
       });
-  
+
       if (sortOrder === "desc") {
         filtered.sort((a, b) => b.averageRating - a.averageRating);
-      } else {
+      } else if (sortOrder === "asc") {
         filtered.sort((a, b) => a.averageRating - b.averageRating);
       }
-  
+
       setFilteredServices(filtered);
     };
-  
+
     applyFilters();
   }, [filter, services, sortOrder, searchText]);
-  
 
   useEffect(() => {
     const filteredBySearchAndCategory = services.filter((service) => {

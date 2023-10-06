@@ -34,7 +34,7 @@ const ServiceItem = (props) => {
       <div className="mt-4 w-auto">
         <NavLink
           to={`/mis-clases/${myClass._id}/comentarios`}
-          className="underline text-gray-600 hover:text-gray-800 transition-colors"
+          className="text-md text-blue-500 hover:underline"
         >
           Ver Comentarios
         </NavLink>

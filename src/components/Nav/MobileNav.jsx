@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const MobileNav = ({ session }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -15,10 +16,22 @@ const MobileNav = ({ session }) => {
     setShowDropdown(false);
   };
 
+  useEffect(() => {
+    if (showDropdown) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
+    }
+
+    return () => {
+      document.body.style.overflow = "visible";
+    };
+  }, [showDropdown]);
+
   const closeButtonStyle = {
     position: "absolute",
-    top: "10px",
-    right: "10px",
+    top: "16px",
+    right: "12px",
   };
 
   return (
@@ -89,6 +102,7 @@ const MobileNav = ({ session }) => {
               </NavLink>
               <NavLink
                 to="/mis-contrataciones"
+                onClick={closeDropdown}
                 className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
               >
                 Contrataciones
@@ -104,7 +118,8 @@ const MobileNav = ({ session }) => {
                 onClick={closeDropdown}
                 className="py-3 text-gray-700 w-full hover:text-orange-600 text-3xl"
               >
-                Sign Out
+                <span className="mr-2">Salir</span>
+                <LogoutIcon />
               </button>
             </>
           ) : (

@@ -20,11 +20,11 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
   const defaultValues = {
     name: "",
     description: "",
-    category: "Front end",
+    category: "Programación",
     frequency: "unique",
     cost: 0.99,
     type: "individual",
-    duration: 0.5,
+    duration: 30,
   };
 
   const formik = useFormik({
@@ -50,13 +50,16 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
+            className={`border rounded p-2 w-full ${
+              formik.touched.name && formik.errors.name
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
           />
           {formik.touched.name && formik.errors.name ? (
             <div className="text-red-600 text-sm">{formik.errors.name}</div>
           ) : null}
         </div>
-
         <div className="my-4">
           <label
             htmlFor="description"
@@ -71,7 +74,11 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             rows="4"
-            className="border border-gray-300 rounded p-2 w-full"
+            className={`border rounded p-2 w-full ${
+              formik.touched.description && formik.errors.description
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
           ></textarea>
           {formik.touched.description && formik.errors.description ? (
             <div className="text-red-600 text-sm">
@@ -95,10 +102,10 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
             onBlur={formik.handleBlur}
             className="border border-gray-300 rounded p-2 w-full"
           >
-            <option value="Front end">Front end</option>
-            <option value="Back end">Back end</option>
-            <option value="Data science">Data science</option>
-            <option value="Dev ops">Dev ops</option>
+            <option value="programacion">Programación</option>
+            <option value="idiomas">Idiomas</option>
+            <option value="musica">Música</option>
+            <option value="matematica">Matemática</option>
           </select>
           {formik.touched.category && formik.errors.category ? (
             <div className="text-red-600 text-sm">{formik.errors.category}</div>

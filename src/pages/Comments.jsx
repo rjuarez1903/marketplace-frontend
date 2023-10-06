@@ -63,7 +63,7 @@ const Comments = () => {
   return (
     <div className="container mx-auto px-5">
       <h1 className="head_text text-left mb-5">
-        <span className="blue_gradient">Contrataciones</span>
+        <span className="blue_gradient">Comentarios</span>
       </h1>
       <div className="lg:col-span-9 mt-10 lg:mt-0">{content}</div>
     </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Form = () => {
+const Form = ({ onSuccess }) => {
   const [submitting, setSubmitting] = useState(false);
   const [contactInfo, setContactInfo] = useState({
     contactEmail: "",
@@ -18,6 +18,7 @@ const Form = () => {
     e.preventDefault();
     // Aquí puedes agregar la lógica para manejar el envío del formulario de contacto
     console.log("Formulario de contacto enviado:", contactInfo);
+    onSuccess();
   };
 
   return (

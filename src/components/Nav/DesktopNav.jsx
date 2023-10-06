@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const DesktopNav = ({ session }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -89,8 +90,9 @@ const DesktopNav = ({ session }) => {
           >
             Contrataciones
           </NavLink>
-          <button type="button" className="outline_btn">
-            Sign Out
+          <button type="button" className="outline_btn flex items-center">
+            <span className="mr-2">Salir</span>
+            <LogoutIcon />
           </button>
           <NavLink
             to="/mi-perfil"

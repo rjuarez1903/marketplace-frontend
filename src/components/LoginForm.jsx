@@ -85,6 +85,14 @@ const LoginForm = () => {
               <div className="text-red-500 text-xs">{formik.errors.password}</div>
             ) : null}
           </div>
+          <div className="text-right">
+            <a
+              href="#" // replace with the actual link or route
+              className="text-sm text-blue-500 hover:underline"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
 
           {formik.status && (
             <div className="text-red-500 text-xs">{formik.status}</div>
