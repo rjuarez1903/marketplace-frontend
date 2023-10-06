@@ -7,6 +7,11 @@ export const translateOption = (option) => {
     group: "grupal",
     classType: "tipo de clase",
     frequency: "frecuencia",
+    sortOrder: "Ordenar por",
+    requested: "Solicitada",
+    completed: "Completada",
+    accepted: "Aceptada",
+    cancelled: "Cancelada",
   };
   return translationMap[option] || option;
 };

@@ -1,6 +1,14 @@
 import { translateOption } from "../utils/translateOption";
 
-const RadioFilter = ({ name, options, selected, onChange }) => {
+const RadioFilter = ({ name, options, selected, onFilterChange, onSortChange }) => {
+  const handleFilterOptionChange = (value) => {
+    onFilterChange(name, value); // Llama a la función onFilterChange con el nombre y el valor seleccionado
+  };
+
+  const handleSortOptionChange = (value) => {
+    onSortChange(value); // Llama a la función onSortChange con el valor seleccionado
+  };
+
   return (
     <div className="mb-4">
       <h3 className="font-semibold mb-2">
@@ -21,10 +29,16 @@ const RadioFilter = ({ name, options, selected, onChange }) => {
                 name={name}
                 value={option.value}
                 checked={selected === option.value}
-                onChange={() => onChange(name, option.value)}
+                onChange={() => {
+                  if (name === "sortOrder") {
+                    handleSortOptionChange(option.value); // Si es un cambio de orden, llama a handleSortOptionChange
+                  } else {
+                    handleFilterOptionChange(option.value); // Si es un cambio de filtro, llama a handleFilterOptionChange
+                  }
+                }}
                 className="sr-only"
               />
-              {translateOption(option.value)}
+              {option.label}
             </label>
           </div>
         ))}

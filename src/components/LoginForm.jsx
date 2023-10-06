@@ -1,22 +1,39 @@
 import { useState } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { login, refreshToken } from "../api/apiService";
 
 const LoginForm = () => {
-  const [submitting, setSubmitting] = useState(false);
-  const [loginInfo, setloginInfo] = useState({
-    email: "",
-    password: "",
+  const [token, setToken] = useState(null);
+  const [expiresIn, setExpiresIn] = useState(null);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Ingresa un correo electrónico válido")
+        .required("El correo electrónico es obligatorio"),
+      password: Yup.string()
+        .required("La contraseña es obligatoria"),
+    }),
+    onSubmit: async (values, { setSubmitting, setStatus }) => {
+      try {
+        setSubmitting(true);
+        const response = await login({
+          email: values.email,
+          password: values.password,
+        });
+      } catch (error) {
+        console.error("Error al iniciar sesión:", error);
+        setStatus(error.response.data.errors[0].message);
+      } finally {
+        setSubmitting(false);
+      }
+    },
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setloginInfo({ ...loginInfo, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el envío del formulario de contacto
-    console.log("Formulario de contacto enviado:", loginInfo);
-  };
 
   return (
     <div>
@@ -26,7 +43,7 @@ const LoginForm = () => {
         </h1>
 
         <form
-          onSubmit={handleSubmit}
+          onSubmit={formik.handleSubmit}
           className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
         >
           <div>
@@ -37,11 +54,15 @@ const LoginForm = () => {
               type="email"
               id="email"
               name="email"
-              value={loginInfo.email}
-              onChange={handleInputChange}
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="border border-gray-300 rounded p-2 w-full"
               required
             />
+            {formik.touched.email && formik.errors.email ? (
+              <div className="text-red-500 text-xs">{formik.errors.email}</div>
+            ) : null}
           </div>
 
           <div>
@@ -55,20 +76,27 @@ const LoginForm = () => {
               type="password"
               id="password"
               name="password"
-              value={loginInfo.password}
-              onChange={handleInputChange}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="border border-gray-300 rounded p-2 w-full"
             />
+            {formik.touched.password && formik.errors.password ? (
+              <div className="text-red-500 text-xs">{formik.errors.password}</div>
+            ) : null}
           </div>
+
+          {formik.status && (
+            <div className="text-red-500 text-xs">{formik.status}</div>
+          )}
 
           <div className="flex-end mx-3 mb-5 gap-4">
             <button
               type="submit"
-              disabled={submitting}
+              disabled={formik.isSubmitting}
               className="px-5 py-1.5 text-sm bg-primary-orange rounded-md text-white uppercase"
             >
-              {/* {submitting ? `${type}ing...` : type} */}
-              Enviar
+              {formik.isSubmitting ? "Enviando..." : "Enviar"}
             </button>
           </div>
         </form>

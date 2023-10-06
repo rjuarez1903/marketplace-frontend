@@ -22,13 +22,13 @@ const DialogBox = ({ title, content, onClose, open }) => {
   }, []);
 
   useEffect(() => {
-    // Al abrir el diálogo, deshabilita el desplazamiento en el cuerpo
+    const originalOverflow = document.body.style.overflow;
     if (open) {
       document.body.style.overflow = "hidden";
-    } else {
-      // Cuando se cierra el diálogo, restaura el desplazamiento normal
-      document.body.style.overflow = "auto";
     }
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
   }, [open]);
 
   const closeButtonStyle = {
@@ -54,7 +54,6 @@ const DialogBox = ({ title, content, onClose, open }) => {
               >
                 <CloseIcon />
               </IconButton>
-              {/* <h2 className="text-lg font-semibold mb-4">{title}</h2> */}
               <div className="mt-5">{content}</div>
             </div>
           </div>

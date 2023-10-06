@@ -1,16 +1,28 @@
 import axiosInstance from "./axiosConfig";
 
-// Función para realizar una solicitud GET a la API
+export const login = (data) => {
+  return axiosInstance
+    .post("/auth/login", data)
+    .then((response) => {
+      console.log(response.data);
+      localStorage.setItem("jwt", JSON.stringify(response.data.jwt));
+      response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const refreshToken = () => {
+  return axiosInstance
+    .get("/auth/refresh")
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
 export const getServices = (category) => {
-  // try {
-  //   const response = await axiosInstance.get('/services');
-  //   Si la solicitud es exitosa, response.data contendrá los datos de la respuesta.
-  //   return response.data.services;
-  // } catch (error) {
-  //   Si hay un error en la solicitud, puedes manejarlo aquí.
-  //   Por ejemplo, puedes lanzar una excepción o devolver un objeto de error personalizado.
-  //   throw error;
-  // }
   return axiosInstance
     .get(`/services?category=${category}`)
     .then((response) => response.data.services)
@@ -23,6 +35,15 @@ export const getServicesByUser = () => {
   return axiosInstance
     .get(`/services/user`)
     .then((response) => response.data.services)
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const deleteService = (classId) => {
+  return axiosInstance
+    .delete(`/services/${classId}`)
+    .then((response) => response.data)
     .catch((error) => {
       throw error;
     });
@@ -71,7 +92,7 @@ export const getServiceContractsByUser = () => {
     .catch((error) => {
       throw error;
     });
-}
+};
 
 export const updateServiceContract = (classId, data) => {
   return axiosInstance

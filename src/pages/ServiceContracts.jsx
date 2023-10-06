@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ServiceContractDetail from "../components/ServiceContractDetail";
 import Loader from "../components/Loader/Loader";
+import MessageWithIcon from "../components/MessageWithIcon";
 import { getServiceContractsByUser } from "../api/apiService";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 const ServiceContracts = () => {
   const [contracts, setContracts] = useState([]);
@@ -36,7 +38,18 @@ const ServiceContracts = () => {
       </ul>
     );
   } else {
-    content = <p>No hay contrataciones disponibles.</p>;
+    content = (
+      <div className="flex flex-col items-center justify-center">
+        <MessageWithIcon
+          icon={
+            <SentimentVeryDissatisfiedIcon
+              sx={{ fontSize: "60px", color: "rgb(75, 85, 99)" }}
+            />
+          }
+          message="Todavía no tenés contrataciones"
+        />
+      </div>
+    );
   }
 
   return (

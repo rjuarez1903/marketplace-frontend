@@ -8,7 +8,6 @@ import { getServices } from "../api/apiService";
 import { formatCategory } from "../utils/formatCategory";
 import SearchIcon from "@mui/icons-material/Search";
 
-
 const Classes = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +17,7 @@ const Classes = () => {
   });
   const [filteredServices, setFilteredServices] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [sortOrder, setSortOrder] = useState("desc");
   const { category } = useParams();
 
   const handleFilterChange = (newFilter) => {
@@ -28,12 +28,18 @@ const Classes = () => {
     setSearchText(event.target.value);
   };
 
+  const handleSortChange = (order) => {
+    setSortOrder(order);
+  };
+
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const formattedCategory = formatCategory(category);
-        const servicesData = await getServices(formattedCategory);
-        setServices(servicesData);
+        // const formattedCategory = formatCategory(category);
+        // const servicesData = await getServices(formattedCategory);
+        const servicesData = await getServices(category);
+        const publishedServices = servicesData.filter(service => service.isPublished);
+        setServices(publishedServices);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -41,27 +47,41 @@ const Classes = () => {
     };
     fetchServices();
   }, [category]);
-
   useEffect(() => {
     const applyFilters = () => {
-      const {
-        classType: filterClassType,
-        frequency: filterFrequency,
-      } = filter;
-
+      const { classType: filterClassType, frequency: filterFrequency } = filter;
+  
       const filtered = services.filter((service) => {
-        const { type: classType, frequency } = service;
+        const { type: classType, frequency, name } = service;
+        const classTypeMatch =
+          filterClassType === "Todas" || classType === filterClassType;
+        const frequencyMatch =
+          filterFrequency === "Todas" || frequency === filterFrequency;
+        const searchTextMatch = name
+          .toLowerCase()
+          .includes(searchText.toLowerCase());
+  
         return (
+          classTypeMatch &&
+          frequencyMatch &&
+          searchTextMatch &&
           (filterClassType === "Todas" || classType === filterClassType) &&
           (filterFrequency === "Todas" || frequency === filterFrequency)
         );
       });
-
+  
+      if (sortOrder === "desc") {
+        filtered.sort((a, b) => b.averageRating - a.averageRating);
+      } else {
+        filtered.sort((a, b) => a.averageRating - b.averageRating);
+      }
+  
       setFilteredServices(filtered);
     };
-
+  
     applyFilters();
-  }, [filter, services]);
+  }, [filter, services, sortOrder, searchText]);
+  
 
   useEffect(() => {
     const filteredBySearchAndCategory = services.filter((service) => {
@@ -73,9 +93,7 @@ const Classes = () => {
       const searchTextMatch = name
         .toLowerCase()
         .includes(searchText.toLowerCase());
-      return (
-       classTypeMatch && frequencyMatch && searchTextMatch
-      );
+      return classTypeMatch && frequencyMatch && searchTextMatch;
     });
     setFilteredServices(filteredBySearchAndCategory);
   }, [searchText, filter, services]);
@@ -87,7 +105,9 @@ const Classes = () => {
   } else if (filteredServices.length === 0) {
     content = (
       <MessageWithIcon
-        icon={<SearchIcon sx={{ fontSize: '60px', color: 'rgb(75, 85, 99)' }} />}
+        icon={
+          <SearchIcon sx={{ fontSize: "60px", color: "rgb(75, 85, 99)" }} />
+        }
         message="¡Oops! Parece que no encontramos resultados para los filtros seleccionados. ¿Querés probar con otros?"
       />
     );
@@ -105,6 +125,7 @@ const Classes = () => {
               duration={service.duration || ""}
               description={service.description}
               category={service.category}
+              type={service.type}
               averageRating={service.averageRating}
             />
           </li>
@@ -118,7 +139,9 @@ const Classes = () => {
       <form className="relative w-full mx-auto max-w-3xl mb-10">
         <input
           type="text"
-          placeholder={`Buscá las clases de ${formatCategory(category)} que necesitás`}
+          placeholder={`Buscá las clases de ${formatCategory(
+            category
+          )} que necesitás`}
           value={searchText}
           onChange={handleSearchChange}
           required
@@ -127,7 +150,10 @@ const Classes = () => {
       </form>
       <div className="lg:grid lg:grid-cols-12 lg:gap-4">
         <div className="lg:col-span-3">
-          <FilterBar onFilterChange={handleFilterChange} />
+          <FilterBar
+            onFilterChange={handleFilterChange}
+            onSortChange={handleSortChange}
+          />
         </div>
         <div className="lg:col-span-9 mt-10 lg:mt-0">{content}</div>
       </div>

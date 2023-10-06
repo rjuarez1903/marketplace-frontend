@@ -1,9 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const CreateClassForm = () => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGVjYzc3Y2I0NzI4MzAwOWExMzNhZGMiLCJpYXQiOjE2OTYyNjc2MjQsImV4cCI6MTY5NjI2ODUyNH0.UyeDiT1p_jQgtKOZfhhDhvXhotOWGRft5Xk-DQSzcWw";
+const CreateClassForm = ({ initialValues, onSubmit }) => {
   const validationSchema = Yup.object({
     name: Yup.string().required("El nombre de la clase es requerido"),
     description: Yup.string().required("La descripción es requerida"),
@@ -19,48 +17,24 @@ const CreateClassForm = () => {
       .min(0.5, "La duración mínima es de 0.5"),
   });
 
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      description: "",
-      category: "Front end",
-      frequency: "unique",
-      cost: 0.99,
-      type: "individual",
-      duration: 0.5,
-    },
-    validationSchema,
-    onSubmit: async (values) => {
-      try {
-        const response = await fetch("http://localhost:4000/api/v1/services", {
-          method: "POST",
-          headers: {
-            "Authorization": "Bearer " + token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        });
+  const defaultValues = {
+    name: "",
+    description: "",
+    category: "Front end",
+    frequency: "unique",
+    cost: 0.99,
+    type: "individual",
+    duration: 0.5,
+  };
 
-        if (response.ok) {
-          // La solicitud se completó con éxito
-          console.log("Formulario enviado con éxito");
-          // Realiza alguna acción adicional si es necesario, como redirigir al usuario
-        } else {
-          console.log(response)
-          console.error("Error al enviar el formulario");
-        }
-      } catch (error) {
-        console.error("Error en la solicitud:", error);
-      }
-    },
+  const formik = useFormik({
+    initialValues: initialValues || defaultValues,
+    validationSchema,
+    onSubmit,
   });
 
   return (
     <section className="w-full max-w-full flex-start flex-col">
-      <h1 className="head_text text-left">
-        <span className="blue_gradient">Creá tu Clase</span>
-      </h1>
-
       <form
         onSubmit={formik.handleSubmit}
         className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"

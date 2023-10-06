@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import ServiceContracts from "./pages/ServiceContracts";
 import MyClasses from "./pages/MyClasses";
 import { ClassCreation } from "./pages/ClassCreation";
+import ClassEdit  from "./pages/ClassEdit";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/mi-perfil" element={<Profile />} exact />
           <Route path="/mis-clases" element={<MyClasses />} exact />
           <Route path="crear-clase" element={<ClassCreation />} exact />
+          <Route path="/editar-clase/:id" element={<ClassEdit />} exact/>
           {/* <Route path="/mi-perfil" element={<Profile />} exact /> */}
           {/* <Route path="/pagar" element={<Payment />} exact /> */}
           {/* <Route path="/depositar" element={<Deposit />} exact /> */}

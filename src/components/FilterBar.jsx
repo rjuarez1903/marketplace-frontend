@@ -2,16 +2,23 @@ import { useState } from "react";
 import { ExpandMore } from "@mui/icons-material";
 import RadioFilter from "./RadioFilter";
 
-const FilterBar = ({ onFilterChange }) => {
+const FilterBar = ({ onFilterChange, onSortChange }) => {
   const [filter, setFilter] = useState({
     classType: "Todas",
     frequency: "Todas",
   });
 
+  const [sortOrder, setSortOrder] = useState("desc"); // Nuevo estado para el ordenamiento (descendente por defecto)
+
   const handleFilterChange = (filterType, value) => {
     const updatedFilter = { ...filter, [filterType]: value };
     setFilter(updatedFilter);
     onFilterChange(updatedFilter);
+  };
+
+  const handleSortChange = (order) => {
+    setSortOrder(order);
+    onSortChange(order);
   };
 
   const classTypes = [
@@ -25,6 +32,11 @@ const FilterBar = ({ onFilterChange }) => {
     { value: "unique", label: "Única" },
     { value: "weekly", label: "Semanal" },
     { value: "monthly", label: "Mensual" },
+  ];
+
+  const orders = [
+    { value: "desc", label: "Mayor calificación" },
+    { value: "asc", label: "Menor calificación" },
   ];
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -42,7 +54,7 @@ const FilterBar = ({ onFilterChange }) => {
           }`}
           onClick={toggleDropdown}
         >
-          <span className="text-lg font-semibold mb-2">Filtrar por:</span>
+          <span className="text-lg font-semibold mb-2">Filtros</span>
           <ExpandMore
             className={`ml-2 transition-transform transform ${
               isDropdownOpen ? "rotate-180" : "rotate-0"
@@ -50,37 +62,52 @@ const FilterBar = ({ onFilterChange }) => {
           />
         </button>
         <div
-          className={`overflow-hidden transition-max-h duration-300 ease-in-out ${
-            isDropdownOpen ? "max-h-100" : "max-h-0"
+          className={`overflow-hidden transition-all duration-500 ${
+            isDropdownOpen ? "max-h-96" : "max-h-0"
           }`}
-        >
+          >
           <RadioFilter
             name="classType"
             options={classTypes}
             selected={filter.classType}
-            onChange={handleFilterChange}
+            onFilterChange={handleFilterChange}
           />
           <RadioFilter
             name="frequency"
             options={frequencies}
             selected={filter.frequency}
-            onChange={handleFilterChange}
+            onFilterChange={handleFilterChange}
+          />
+          <RadioFilter
+            name="sortOrder"
+            options={[
+              { value: "desc", label: "Mayor calificación" },
+              { value: "asc", label: "Menor calificación" },
+            ]}
+            selected={sortOrder}
+            onSortChange={handleSortChange} 
           />
         </div>
       </div>
       <div className="hidden lg:block">
-        <h2 className="text-lg font-semibold mb-2">Filtrar por:</h2>
+        <h2 className="text-lg font-semibold mb-2">Filtros</h2>
         <RadioFilter
           name="classType"
           options={classTypes}
           selected={filter.classType}
-          onChange={handleFilterChange}
+          onFilterChange={handleFilterChange}
         />
         <RadioFilter
           name="frequency"
           options={frequencies}
           selected={filter.frequency}
-          onChange={handleFilterChange}
+          onFilterChange={handleFilterChange}
+        />
+        <RadioFilter
+          name="sortOrder"
+          options={orders}
+          selected={sortOrder}
+          onSortChange={handleSortChange} 
         />
       </div>
     </div>

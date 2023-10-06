@@ -72,6 +72,8 @@ export const ClassDetail = () => {
             description={classDetail.description}
             duration={classDetail.duration || ""}
             category={classDetail.category}
+            type={classDetail.type}
+            averageRating={classDetail.averageRating}
             teacherFirstName={user.firstName}
             teacherLastName={user.lastName}
             teacherDegree={user.degree}

@@ -35,7 +35,7 @@ const DesktopNav = ({ session }) => {
       <div className="relative group cursor-pointer z-50">
         <span
           onClick={toggleDropdown}
-          className="flex items-center font-bold text-gray-700 mr-5 hover:text-orange-600"
+          className="flex items-center font-bold text-gray-700 mr-3 md:mr-5 hover:text-orange-600"
         >
           Categorías
         </span>
@@ -45,32 +45,32 @@ const DesktopNav = ({ session }) => {
           } absolute top-full left-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg`}
         >
           <NavLink
-            to="/clases/front-end"
+            to="/clases/programacion"
             className="rounded-t-lg block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
             onClick={closeDropdown}
           >
-            Front End
+            Programación
           </NavLink>
           <NavLink
-            to="/clases/back-end"
+            to="/clases/idiomas"
             className="block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
             onClick={closeDropdown}
           >
-            Back End
+            Idiomas
           </NavLink>
           <NavLink
-            to="/clases/data-science"
+            to="/clases/musica"
             className="block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
             onClick={closeDropdown}
           >
-            Data Science
+            Música
           </NavLink>
           <NavLink
-            to="/clases/dev-ops"
+            to="/clases/matematica"
             className="rounded-b-lg block px-4 py-2 hover:bg-gray-100 min-w-[200px]"
             onClick={closeDropdown}
           >
-            Dev Ops
+            Matemática
           </NavLink>
           {/* Agrega más enlaces de categorías aquí */}
         </div>
@@ -108,7 +108,7 @@ const DesktopNav = ({ session }) => {
       ) : (
         <div className="flex gap-3 md:gap-5">
           <NavLink to="/login" className="outline_btn">
-            Sign In
+            Ingresar
           </NavLink>
           <NavLink to="/register" className="black_btn">
             Registrarse

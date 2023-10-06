@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import StarRating from "./StarRating";
+import { translateOption } from "../utils/translateOption";
+import { formatDecimalToTime } from "../utils/formatDecimalToTime";
 
 const ServiceCard = (props) => {
   return (
@@ -12,7 +14,7 @@ const ServiceCard = (props) => {
                 {props.name}
               </h2>
               <p className="font-inter text-lg text-gray-600">
-                ${props.cost} / {props.frequency} / {props.duration} horas
+                ${props.cost} / {translateOption(props.frequency)} / {formatDecimalToTime(props.duration || 0)}  
               </p>
             </div>
           </div>
@@ -26,6 +28,15 @@ const ServiceCard = (props) => {
         <p className="font-inter text-md blue_gradient cursor-pointer uppercase">
           #{props.category}
         </p>
+        {props.type === "individual" ? (
+            <span className="bg-blue-600 text-white text-xs absolute top-0 right-0 py-1 px-5 rounded-tr-3xl rounded-bl-3xl">
+              Individual
+            </span>
+          ) : (
+            <span className="bg-amber-500 text-white text-xs absolute top-0 right-0 py-1 px-5 rounded-tr-3xl rounded-bl-3xl">
+              Grupal
+            </span>
+          )}
       </NavLink>
     </div>
   );

@@ -87,7 +87,7 @@ const MobileNav = ({ session }) => {
                 onClick={closeDropdown}
                 className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
               >
-                Sign In
+                Ingresar
               </NavLink>
               <NavLink
                 to="/register"
