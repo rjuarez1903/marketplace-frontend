@@ -21,9 +21,9 @@ export const Home = () => {
           EduHub te permite encontrar profesores de primera línea desde la
           comodidad de tu casa
         </p>
-        <NavLink className="black_btn mt-3" to="/clases">
+        {/* <NavLink className="black_btn mt-3" to="/clases">
           Ver Clases
-        </NavLink>
+        </NavLink> */}
       </section>
       <section className="mt-10">
         <div className=" bg-gray-100">
@@ -40,7 +40,7 @@ export const Home = () => {
                 accesible.
               </p>
               <div className="flex gap-3 mt-3">
-                <NavLink className="outline_btn " to="/clases">
+                <NavLink className="outline_btn " to="/clases/programacion">
                   Aprender
                 </NavLink>
                 <NavLink className="black_btn" to="/register">

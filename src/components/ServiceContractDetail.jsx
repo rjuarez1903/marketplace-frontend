@@ -87,7 +87,7 @@ const ServiceContractDetail = ({ contract }) => {
       <p className="font-satoshi text-base md:text-lg text-gray-700 mb-3">
         {contract.message}
       </p>
-      <p className="font-satoshi text-base md:text-lg text-gray-700 mb-0">
+      <p className="font-satoshi text-base md:text-lg text-gray-700 mb-1">
         Horario de contacto
       </p>
       {renderPreferredContactTimeIcon(contract.preferredContactTime)}

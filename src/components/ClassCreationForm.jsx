@@ -133,7 +133,7 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
 
         <div>
           <label htmlFor="cost" className="font-inter text-sm text-gray-600">
-            Costo (entre 0.99 y 4):
+            Costo ($0.99 como mínimo):
           </label>
           <input
             type="number"
@@ -170,7 +170,7 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
           ) : null}
         </div>
 
-        <div>
+        {/* <div>
           <label
             htmlFor="duration"
             className="font-inter text-sm text-gray-600"
@@ -187,6 +187,42 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
             className="border border-gray-300 rounded p-2 w-full"
             step="0.01"
           />
+          {formik.touched.duration && formik.errors.duration ? (
+            <div className="text-red-600 text-sm">{formik.errors.duration}</div>
+          ) : null}
+        </div> */}
+
+        <div>
+          <label
+            htmlFor="duration"
+            className="font-inter text-sm text-gray-600"
+          >
+            Duración (mínimo 30 minutos):
+          </label>
+          <div className="flex items-center">
+            <input
+              type="number"
+              id="duration"
+              name="duration"
+              value={formik.values.duration}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="border border-gray-300 rounded p-2 w-full"
+              min="1"
+              step="1"
+            />
+            <select
+              id="timeUnit"
+              name="timeUnit"
+              value={formik.values.timeUnit}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className="ml-2 border border-gray-300 rounded p-2"
+            >
+              <option value="minutes">Minutos</option>
+              <option value="hours">Horas</option>
+            </select>
+          </div>
           {formik.touched.duration && formik.errors.duration ? (
             <div className="text-red-600 text-sm">{formik.errors.duration}</div>
           ) : null}

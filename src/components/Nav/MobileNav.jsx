@@ -51,11 +51,32 @@ const MobileNav = ({ session }) => {
             <CloseIcon />
           </IconButton>
           <NavLink
-            to="/clases"
+            to="/clases/programacion"
             onClick={closeDropdown}
             className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
           >
-            Clases
+            Programación
+          </NavLink>
+          <NavLink
+            to="/clases/idiomas"
+            onClick={closeDropdown}
+            className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
+          >
+            Idiomas
+          </NavLink>
+          <NavLink
+            to="/clases/musica"
+            onClick={closeDropdown}
+            className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
+          >
+            Música
+          </NavLink>
+          <NavLink
+            to="/clases/matematica"
+            onClick={closeDropdown}
+            className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
+          >
+            Matemática
           </NavLink>
           {session?.user ? (
             <>
@@ -64,7 +85,13 @@ const MobileNav = ({ session }) => {
                 onClick={closeDropdown}
                 className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
               >
-                Mis clases
+                Clases
+              </NavLink>
+              <NavLink
+                to="/mis-contrataciones"
+                className="py-3 text-gray-700 hover:text-orange-600 text-3xl"
+              >
+                Contrataciones
               </NavLink>
               <NavLink
                 to="/mi-perfil"

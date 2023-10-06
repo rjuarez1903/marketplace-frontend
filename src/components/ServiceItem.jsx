@@ -1,7 +1,8 @@
-import { Edit, Delete, Visibility, VisibilityOff } from "@mui/icons-material"; 
+import { Edit, Delete, Visibility, VisibilityOff } from "@mui/icons-material";
 import StarRating from "./StarRating";
 import { translateOption } from "../utils/translateOption";
 import { formatDecimalToTime } from "../utils/formatDecimalToTime";
+import { NavLink } from "react-router-dom";
 
 const ServiceItem = (props) => {
   // destructure myClass from props
@@ -30,6 +31,14 @@ const ServiceItem = (props) => {
       <p className="font-inter text-md blue_gradient cursor-pointer uppercase">
         #{myClass.category}
       </p>
+      <div className="mt-4 w-auto">
+        <NavLink
+          to={`/mis-clases/${myClass._id}/comentarios`}
+          className="underline text-gray-600 hover:text-gray-800 transition-colors"
+        >
+          Ver Comentarios
+        </NavLink>
+      </div>
       <div className="mt-4 flex flex-col sm:flex-row sm:justify-end items-end gap-2">
         <button
           onClick={() => onEdit(myClass._id)}
@@ -59,14 +68,14 @@ const ServiceItem = (props) => {
           </button>
         )}
         {myClass.type === "individual" ? (
-            <span className="bg-blue-600 text-white text-xs absolute top-0 right-0 py-1 px-5 rounded-tr-3xl rounded-bl-3xl">
-              Individual
-            </span>
-          ) : (
-            <span className="bg-amber-500 text-white text-xs absolute top-0 right-0 py-1 px-5 rounded-tr-3xl rounded-bl-3xl">
-              Grupal
-            </span>
-          )}
+          <span className="bg-blue-600 text-white text-xs absolute top-0 right-0 py-1 px-5 rounded-tr-3xl rounded-bl-3xl">
+            Individual
+          </span>
+        ) : (
+          <span className="bg-amber-500 text-white text-xs absolute top-0 right-0 py-1 px-5 rounded-tr-3xl rounded-bl-3xl">
+            Grupal
+          </span>
+        )}
       </div>
     </div>
   );
