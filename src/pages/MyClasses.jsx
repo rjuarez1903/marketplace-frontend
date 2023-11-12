@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { deleteService, getServicesByUser } from "../api/apiService";
-import ServiceDetail from "../components/ServiceDetail";
 import Loader from "../components/Loader/Loader";
 import MessageWithIcon from "../components/MessageWithIcon";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import PostAddIcon from "@mui/icons-material/PostAdd";
-import SimplifiedServiceDetail from "../components/SimplifiedServiceDetail";
 import ServiceItem from "../components/ServiceItem";
 import DialogBox from "../components/DialogBox";
 import ConfirmationDialog from "../components/ConfirmationDialog";
