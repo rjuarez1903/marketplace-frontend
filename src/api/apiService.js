@@ -1,15 +1,15 @@
 import axiosInstance from "./axiosConfig";
 
-export const login = (data) => {
+export const apiLogin = (data) => {
   return axiosInstance
     .post("/auth/login", data)
     .then((response) => {
-      console.log(response.data);
       localStorage.setItem("jwt", JSON.stringify(response.data.jwt));
-      response.data;
+      // localStorage.setItem('user', JSON.stringify(response.data.user));
+      return response.data;
     })
     .catch((error) => {
-      throw error;
+      throw error.response.data;
     });
 };
 

@@ -4,6 +4,7 @@ import ServiceDetail from "../components/ServiceDetail";
 import Loader from "../components/Loader/Loader";
 import MessageWithIcon from "../components/MessageWithIcon";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 import SimplifiedServiceDetail from "../components/SimplifiedServiceDetail";
 import ServiceItem from "../components/ServiceItem";
 import DialogBox from "../components/DialogBox";
@@ -82,7 +83,7 @@ const MyClasses = () => {
             <ServiceItem
               myClass={myClass}
               onEdit={() => handleEdit(myClass)}
-              onDelete={() => openConfirmationDialog(myClass._id)}  // Ensure this line is correct
+              onDelete={() => openConfirmationDialog(myClass._id)} // Ensure this line is correct
               onPublish={handlePublish}
               onUnpublish={handleUnpublish}
             />
@@ -101,7 +102,10 @@ const MyClasses = () => {
           }
           message="Todavía no creaste ninguna clase"
         />
-        <button className="black_btn mt-5">Crear Clase</button>
+        <NavLink to="/crear-clase" className="black_btn w-auto">
+          <PostAddIcon className="mr-2" />
+          Crear Clase
+        </NavLink>
       </div>
     );
   }
@@ -113,6 +117,7 @@ const MyClasses = () => {
       </h1>
       <div className="flex justify-end mb-5">
         <NavLink to="/crear-clase" className="black_btn w-auto">
+          <PostAddIcon className="mr-2" />
           Crear Clase
         </NavLink>
       </div>

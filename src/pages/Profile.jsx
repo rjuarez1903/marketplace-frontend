@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { UserContext } from "../UserContext";
+
 const Profile = () => {
+  const { session } = useContext(UserContext);
+
   return (
     <div>
       <section className="container mx-auto px-5">
@@ -10,7 +15,7 @@ const Profile = () => {
             <div className="grid grid-cols-12 gap-5">
               <div className="col-span-12">
                 <img
-                  src="/assets/images/profile.jpg"
+                  src={session.profileImgUrl}
                   alt="Profile"
                   className="rounded-full h-40 w-40 object-cover"
                 />
@@ -96,7 +101,7 @@ const Profile = () => {
                     id="experience"
                     name="experience"
                     rows="5"
-                    value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Quisquam, voluptatum."
+                    value="Licenciado en Sistemas con experiencia en desarrollo y gestión de proyectos tecnológicos. Experto en implementar soluciones innovadoras y eficientes, con sólidos conocimientos en tecnologías actuales y emergentes. Comprometido con la mejora continua y la excelencia en el servicio."
                   />
                 </div>
               </div>
