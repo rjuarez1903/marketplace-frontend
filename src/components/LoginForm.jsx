@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { login, refreshToken } from "../api/apiService";
+import { UserContext } from "../UserContext";
 
 const LoginForm = () => {
   const [token, setToken] = useState(null);
   const [expiresIn, setExpiresIn] = useState(null);
+  const { login } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -16,19 +19,20 @@ const LoginForm = () => {
       email: Yup.string()
         .email("Ingresa un correo electrónico válido")
         .required("El correo electrónico es obligatorio"),
-      password: Yup.string()
-        .required("La contraseña es obligatoria"),
+      password: Yup.string().required("La contraseña es obligatoria"),
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
         setSubmitting(true);
-        const response = await login({
-          email: values.email,
-          password: values.password,
-        });
+        const response = await login(values.email, values.password);
+        if (response) {
+          navigate("/mis-clases");
+        }
       } catch (error) {
         console.error("Error al iniciar sesión:", error);
-        setStatus(error.response.data.errors[0].message);
+        setStatus(
+          error.errors[0].message || error.errors[0].msg || "Error desconocido al iniciar sesión."
+        );
       } finally {
         setSubmitting(false);
       }
@@ -55,7 +59,10 @@ const LoginForm = () => {
               id="email"
               name="email"
               value={formik.values.email}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                formik.handleChange(e);
+                formik.setStatus(null);
+              }}
               onBlur={formik.handleBlur}
               className="border border-gray-300 rounded p-2 w-full"
               required
@@ -77,12 +84,17 @@ const LoginForm = () => {
               id="password"
               name="password"
               value={formik.values.password}
-              onChange={formik.handleChange}
+              onChange={(e) => {
+                formik.handleChange(e);
+                formik.setStatus(null);
+              }}
               onBlur={formik.handleBlur}
               className="border border-gray-300 rounded p-2 w-full"
             />
             {formik.touched.password && formik.errors.password ? (
-              <div className="text-red-500 text-xs">{formik.errors.password}</div>
+              <div className="text-red-500 text-xs">
+                {formik.errors.password}
+              </div>
             ) : null}
           </div>
           <div className="text-right">
@@ -95,7 +107,9 @@ const LoginForm = () => {
           </div>
 
           {formik.status && (
-            <div className="text-red-500 text-xs">{formik.status}</div>
+            <div className="text-red-500 text-xs p-3 bg-red-100 rounded-md">
+              {formik.status}
+            </div>
           )}
 
           <div className="flex-end mx-3 mb-5 gap-4">

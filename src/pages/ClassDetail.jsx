@@ -118,7 +118,7 @@ export const ClassDetail = () => {
                   sx={{ fontSize: "60px", color: "rgb(75, 85, 99)" }}
                 />
               }
-              message="¡Oops! Parece que no hay comentarios aún. !Comentá antes que nadie!"
+              message="¡Oops! Parece que no hay comentarios aún. ¡Comentá antes que nadie!"
             />
           ) : (
             <ul className="grid grid-cols-12 gap-4">

@@ -63,7 +63,7 @@ export const CommentForm = () => {
 
       <div className="my-4">
         <label htmlFor="content" className="font-inter text-sm text-gray-600">
-          Mensaje:
+          Comentario:
         </label>
         <textarea
           id="content"
@@ -74,15 +74,14 @@ export const CommentForm = () => {
           className="border border-gray-300 rounded p-2 w-full"
           required
         ></textarea>
+        <p className="text-xs text-gray-500 mt-1">
+          La publicación de comentarios está sujeta al criterio del profesor
+        </p>
       </div>
 
       <div className="">
-        <p className="font-inter text-sm text-gray-600">
-          Calificación
-        </p>
-        <div className="flex space-x-2">
-          {renderStars(5)}
-        </div>
+        <p className="font-inter text-sm text-gray-600">Calificación</p>
+        <div className="flex space-x-2">{renderStars(5)}</div>
       </div>
 
       <div className="flex-end mx-3 mb-5 gap-4">
