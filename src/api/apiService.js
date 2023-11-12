@@ -5,11 +5,20 @@ export const apiLogin = (data) => {
     .post("/auth/login", data)
     .then((response) => {
       localStorage.setItem("jwt", JSON.stringify(response.data.jwt));
-      // localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       return response.data;
     })
     .catch((error) => {
       throw error.response.data;
+    });
+};
+
+export const validateToken = (token) => {
+  return axiosInstance
+    .post("/auth/validateToken", { token })
+    .then((response) => response.data.valid)
+    .catch((error) => {
+      throw error;
     });
 };
 

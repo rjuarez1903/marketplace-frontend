@@ -50,7 +50,7 @@ const MobileNav = ({ session }) => {
           className="flex items-center gap-2 focus:outline-none"
         >
           <img
-            src="/assets/images/profile.jpg"
+            src={session.profileImgUrl}
             width={37}
             height={37}
             className="rounded-full"
