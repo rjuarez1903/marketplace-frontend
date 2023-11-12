@@ -102,10 +102,6 @@ const MyClasses = () => {
           }
           message="Todavía no creaste ninguna clase"
         />
-        <NavLink to="/crear-clase" className="black_btn w-auto">
-          <PostAddIcon className="mr-2" />
-          Crear Clase
-        </NavLink>
       </div>
     );
   }
