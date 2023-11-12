@@ -111,3 +111,19 @@ export const updateServiceContract = (classId, data) => {
       throw error;
     });
 };
+
+
+export const uploadImage = (file) => {
+  const formData = new FormData();
+  formData.append("file", file); 
+  return axiosInstance
+    .patch(`/users/profileImage`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};

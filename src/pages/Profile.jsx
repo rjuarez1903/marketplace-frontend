@@ -1,8 +1,63 @@
-import { useContext } from "react";
+import { useContext, useCallback, useState } from "react";
+import ImageUploadSection from "../components/ImageUploadSection";
 import { UserContext } from "../UserContext";
+import { uploadImage } from "../api/apiService";
+import DialogBox from "../components/DialogBox";
+import CustomSnackbar from "../components/CustomSnackbar";
 
 const Profile = () => {
-  const { session } = useContext(UserContext);
+  const { session, setSession } = useContext(UserContext); // Asegúrate de que UserContext provea setSession
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    type: "success",
+  });
+
+  const handleImageSelected = useCallback((file) => {
+    setSelectedImage(file);
+    setUploadMessage("");
+  }, []);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleSubmit = async () => {
+    if (!selectedImage) {
+      setSnackbar({
+        open: true,
+        message: "Por favor, selecciona una imagen.",
+        type: "error",
+      });
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const response = await uploadImage(selectedImage);
+      setSession({ ...session, profileImgUrl: response.user.profileImgUrl });
+      setSnackbar({
+        open: true,
+        message: "Imagen actualizada con éxito.",
+        type: "success",
+      });
+    } catch (error) {
+      console.error(error);
+      setSnackbar({
+        open: true,
+        message: "Error al subir la imagen.",
+        type: "error",
+      });
+    }
+    setIsSubmitting(false);
+    closeModal();
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   return (
     <div>
@@ -21,9 +76,28 @@ const Profile = () => {
                 />
               </div>
               <div className="col-span-12 text-right">
-                <button className="black_btn w-40">Editar</button>
+                <button onClick={openModal} className="black_btn w-40">
+                  Editar
+                </button>
               </div>
             </div>
+            <DialogBox
+              open={isModalOpen}
+              onClose={closeModal}
+              content={
+                <ImageUploadSection
+                  onImageSelected={handleImageSelected}
+                  onSubmit={handleSubmit}
+                  isSubmitting={isSubmitting}
+                />
+              }
+            />
+            <CustomSnackbar
+              open={snackbar.open}
+              message={snackbar.message}
+              type={snackbar.type}
+              onClose={handleCloseSnackbar}
+            />
           </div>
           <div className="mt-5 lg:mt-0 col-span-9">
             <form className="w-full max-w-2xl flex flex-col gap-7 glassmorphism">
