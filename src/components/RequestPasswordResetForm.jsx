@@ -1,36 +1,40 @@
-import { useContext } from "react";
+// RequestPasswordReset.jsx
+
+import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { UserContext } from "../UserContext";
+import CustomSnackbar from "./CustomSnackbar";
+import { requestPasswordReset } from "../api/apiService";
 
-const LoginForm = () => {
-  const { login } = useContext(UserContext);
+const RequestPasswordReset = () => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
       email: "",
-      password: "",
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email("Ingresa un correo electrónico válido")
+        .email("Correo electrónico inválido")
         .required("El correo electrónico es obligatorio"),
-      password: Yup.string().required("La contraseña es obligatoria"),
     }),
-    onSubmit: async (values, { setSubmitting, setStatus }) => {
+    onSubmit: async (values, { setSubmitting }) => {
+      setSubmitting(true);
       try {
-        setSubmitting(true);
-        const response = await login(values.email, values.password);
-        if (response) {
-          navigate("/mis-clases");
-        }
-      } catch (error) {
-        console.error("Error al iniciar sesión:", error);
-        setStatus(
-          error.errors[0].message || error.errors[0].msg || "Error desconocido al iniciar sesión."
+        await requestPasswordReset(values.email);
+        setSnackbarMessage(
+          "Si tu cuenta existe, te hemos enviado un enlace para restablecer tu contraseña."
         );
+        setOpenSnackbar(true);
+        // navigate("/");
+      } catch (error) {
+        setSnackbarMessage(
+          "Ha ocurrido un error. Por favor intenta más tarde."
+        );
+        setOpenSnackbar(true);
       } finally {
         setSubmitting(false);
       }
@@ -38,12 +42,11 @@ const LoginForm = () => {
   });
 
   return (
-    <div>
+    <>
       <section className="w-full max-w-full flex-start flex-col">
         <h1 className="head_text text-left">
-          <span className="blue_gradient">Login</span>
+          <span className="blue_gradient">Restablecer contraseña</span>
         </h1>
-
         <form
           onSubmit={formik.handleSubmit}
           className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
@@ -63,55 +66,17 @@ const LoginForm = () => {
               }}
               onBlur={formik.handleBlur}
               className="border border-gray-300 rounded p-2 w-full"
-              required
+              // required 
             />
             {formik.touched.email && formik.errors.email ? (
               <div className="text-red-500 text-xs">{formik.errors.email}</div>
             ) : null}
           </div>
-
-          <div>
-            <label
-              htmlFor="password"
-              className="font-inter text-sm text-gray-600"
-            >
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formik.values.password}
-              onChange={(e) => {
-                formik.handleChange(e);
-                formik.setStatus(null);
-              }}
-              onBlur={formik.handleBlur}
-              className="border border-gray-300 rounded p-2 w-full"
-            />
-            {formik.touched.password && formik.errors.password ? (
-              <div className="text-red-500 text-xs">
-                {formik.errors.password}
-              </div>
-            ) : null}
-          </div>
-          <div className="text-right">
-            <button
-              type="button"
-              onClick={() => navigate("/solicitud-restablecer-password")}
-              className="text-sm text-blue-500 hover:underline"
-
-            >
-              ¿Olvidaste tu contraseña?
-            </button>
-          </div>
-
           {formik.status && (
             <div className="text-red-500 text-xs p-3 bg-red-100 rounded-md">
               {formik.status}
             </div>
           )}
-
           <div className="flex-end mx-3 mb-5 gap-4">
             <button
               type="submit"
@@ -122,9 +87,15 @@ const LoginForm = () => {
             </button>
           </div>
         </form>
+        <CustomSnackbar
+          message={snackbarMessage}
+          type="success"
+          open={openSnackbar}
+          onClose={() => setOpenSnackbar(false)}
+        />
       </section>
-    </div>
+    </>
   );
 };
 
-export default LoginForm;
+export default RequestPasswordReset;
