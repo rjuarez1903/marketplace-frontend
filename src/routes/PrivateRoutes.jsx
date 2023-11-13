@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 const PrivateRoutes = () => {
-  const jwt = localStorage.getItem("jwt");
-  return jwt ? <Outlet /> : <Navigate to="/login" />;
-}
+  const { session } = useContext(UserContext);
+  return session ? <Outlet /> : <Navigate to="/login" />;
+};
 
 export default PrivateRoutes;
