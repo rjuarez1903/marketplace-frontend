@@ -43,10 +43,10 @@ const LoginForm = () => {
         <h1 className="head_text text-left">
           <span className="blue_gradient">Login</span>
         </h1>
-
+        
         <form
           onSubmit={formik.handleSubmit}
-          className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
+          className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
         >
           <div>
             <label htmlFor="email" className="font-inter text-sm text-gray-600">

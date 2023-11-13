@@ -63,7 +63,7 @@ const PasswordResetForm = () => {
       </h1>
       <form
         onSubmit={formik.handleSubmit}
-        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
+        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
       >
         {/* Inputs para nueva contraseña y confirmación */}
         <div>

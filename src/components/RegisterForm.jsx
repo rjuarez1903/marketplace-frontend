@@ -17,7 +17,7 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para manejar el envío del formulario de contacto
+    // TODO 
     console.log("Formulario de contacto enviado:", registerInfo);
   };
 
@@ -29,7 +29,7 @@ const RegisterForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
+        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
       >
         <div>
           <label htmlFor="email" className="font-inter text-sm text-gray-600">

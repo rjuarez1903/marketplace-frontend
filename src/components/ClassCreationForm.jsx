@@ -37,7 +37,7 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
     <section className="w-full max-w-full flex-start flex-col">
       <form
         onSubmit={formik.handleSubmit}
-        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
+        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
       >
         <div>
           <label htmlFor="name" className="font-inter text-sm text-gray-600">
