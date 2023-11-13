@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { UserContext } from "../../UserContext";
-
 
 const DesktopNav = ({ session }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -92,7 +91,11 @@ const DesktopNav = ({ session }) => {
           >
             Contrataciones
           </NavLink>
-          <button type="button" className="outline_btn flex items-center" onClick={logout}>
+          <button
+            type="button"
+            className="outline_btn flex items-center"
+            onClick={logout}
+          >
             <span className="mr-2">Salir</span>
             <LogoutIcon />
           </button>
@@ -101,7 +104,11 @@ const DesktopNav = ({ session }) => {
             className="flex items-center font-bold text-gray-700 hover:text-orange-600"
           >
             <img
-              src={session.profileImgUrl}
+              src={
+                session.profileImgUrl === ""
+                  ? "../public/assets/images/dummyAvatar.jpeg"
+                  : session.profileImgUrl
+              }
               width={37}
               height={37}
               className="rounded-full"

@@ -22,7 +22,7 @@ const MobileNav = ({ session }) => {
   const handleLogout = () => {
     logout();
     closeDropdown();
-  }
+  };
 
   useEffect(() => {
     if (showDropdown) {
@@ -50,7 +50,11 @@ const MobileNav = ({ session }) => {
           className="flex items-center gap-2 focus:outline-none"
         >
           <img
-            src={session.profileImgUrl}
+            src={
+              session.profileImgUrl === ""
+                ? "../public/assets/images/dummyAvatar.jpeg"
+                : session.profileImgUrl
+            }
             width={37}
             height={37}
             className="rounded-full"

@@ -6,7 +6,7 @@ import DialogBox from "../components/DialogBox";
 import CustomSnackbar from "../components/CustomSnackbar";
 
 const Profile = () => {
-  const { session, setSession } = useContext(UserContext); // Asegúrate de que UserContext provea setSession
+  const { session, setSession } = useContext(UserContext);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -70,7 +70,11 @@ const Profile = () => {
             <div className="grid grid-cols-12 gap-5">
               <div className="col-span-12">
                 <img
-                  src={session.profileImgUrl}
+                  src={
+                    session.profileImgUrl === ""
+                      ? "../public/assets/images/dummyAvatar.jpeg"
+                      : session.profileImgUrl
+                  }
                   alt="Profile"
                   className="rounded-full h-40 w-40 object-cover"
                 />
