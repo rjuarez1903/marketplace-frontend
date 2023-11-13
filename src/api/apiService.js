@@ -13,6 +13,15 @@ export const apiLogin = (data) => {
     });
 };
 
+export const requestPasswordReset = (email) => {
+  return axiosInstance
+    .post("/auth/requestPasswordReset", { email })
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
 export const validateToken = (token) => {
   return axiosInstance
     .post("/auth/validateToken", { token })
