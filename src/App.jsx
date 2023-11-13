@@ -15,55 +15,45 @@ import Comments from "./pages/Comments";
 import { UserProvider } from "./UserContext";
 import RequestPasswordReset from "./pages/RequestPasswordReset";
 import PasswordReset from "./pages/PasswordReset";
-
+import PrivateRoutes from "./routes/PrivateRoutes";
 
 function App() {
   return (
     <UserProvider>
       <Layout>
         <Routes>
-          {/* <Route element={<PrivateRoutes />}> */}
-          <Route path="/" element={<Home />} exact />
-          <Route path="/mi-perfil" element={<Profile />} exact />
-          <Route path="/mis-clases" element={<MyClasses />} exact />
-          <Route path="crear-clase" element={<ClassCreation />} exact />
-          <Route path="/editar-clase/:id" element={<ClassEdit />} exact />
-          <Route
-            path="/mis-clases/:id/comentarios"
-            element={<Comments />}
-            exact
-          />
-          {/* <Route path="/mi-perfil" element={<Profile />} exact /> */}
-          {/* <Route path="/pagar" element={<Payment />} exact /> */}
-          {/* <Route path="/depositar" element={<Deposit />} exact /> */}
-          {/* <Route path="/transferir" element={<Transfer />} exact /> */}
-          {/* <Route path="/plazo-fijo" element={<FixedTerm />} /> */}
-          {/* </Route> */}
           <Route path="/" element={<Home />} exact />
           <Route path="/clases/:category" element={<Classes />} exact />
           <Route path="/clases/detalle/:id" element={<ClassDetail />} exact />
-          <Route
-            path="/mis-contrataciones/"
-            element={<ServiceContracts />}
-            exact
-          />
-          <Route
-            path="/solicitud-clase/:id"
-            element={<ServiceRequest />}
-            exact
-          />
           <Route path="/login" element={<Login />} exact />
           <Route
             path="/solicitud-restablecer-password"
             element={<RequestPasswordReset />}
             exact
           />
-          <Route
-            path="/reset-password"
-            element={<PasswordReset />}
-            exact
-          />
+          <Route path="/reset-password" element={<PasswordReset />} exact />
           <Route path="/register" element={<Register />} exact />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/mi-perfil" element={<Profile />} exact />
+            <Route path="/mis-clases" element={<MyClasses />} exact />
+            <Route path="crear-clase" element={<ClassCreation />} exact />
+            <Route path="/editar-clase/:id" element={<ClassEdit />} exact />
+            <Route
+              path="/mis-clases/:id/comentarios"
+              element={<Comments />}
+              exact
+            />
+            <Route
+              path="/mis-contrataciones/"
+              element={<ServiceContracts />}
+              exact
+            />
+            <Route
+              path="/solicitud-clase/:id"
+              element={<ServiceRequest />}
+              exact
+            />
+          </Route>
         </Routes>
       </Layout>
     </UserProvider>
