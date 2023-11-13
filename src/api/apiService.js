@@ -22,6 +22,16 @@ export const requestPasswordReset = (email) => {
     });
 }
 
+export const resetPassword = ({ token, password }) => {
+  return axiosInstance
+    .post("/auth/resetPassword", { token, password })
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
+
 export const validateToken = (token) => {
   return axiosInstance
     .post("/auth/validateToken", { token })

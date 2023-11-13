@@ -1,6 +1,6 @@
 import RequestPasswordResetForm from "../components/RequestPasswordResetForm";
 
-const RequestPassword = () => {
+const RequestPasswordReset = () => {
   return (
     <div className="container mx-auto px-5">
       <RequestPasswordResetForm />
@@ -8,4 +8,4 @@ const RequestPassword = () => {
   );
 };
 
-export default RequestPassword;
+export default RequestPasswordReset;

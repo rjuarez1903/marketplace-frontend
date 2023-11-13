@@ -14,6 +14,8 @@ import ClassEdit from "./pages/ClassEdit";
 import Comments from "./pages/Comments";
 import { UserProvider } from "./UserContext";
 import RequestPasswordReset from "./pages/RequestPasswordReset";
+import PasswordReset from "./pages/PasswordReset";
+
 
 function App() {
   return (
@@ -54,6 +56,11 @@ function App() {
           <Route
             path="/solicitud-restablecer-password"
             element={<RequestPasswordReset />}
+            exact
+          />
+          <Route
+            path="/reset-password"
+            element={<PasswordReset />}
             exact
           />
           <Route path="/register" element={<Register />} exact />

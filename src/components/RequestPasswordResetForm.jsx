@@ -66,7 +66,7 @@ const RequestPasswordReset = () => {
               }}
               onBlur={formik.handleBlur}
               className="border border-gray-300 rounded p-2 w-full"
-              required
+              // required 
             />
             {formik.touched.email && formik.errors.email ? (
               <div className="text-red-500 text-xs">{formik.errors.email}</div>

@@ -97,6 +97,7 @@ const LoginForm = () => {
           </div>
           <div className="text-right">
             <button
+              type="button"
               onClick={() => navigate("/solicitud-restablecer-password")}
               className="text-sm text-blue-500 hover:underline"
 
