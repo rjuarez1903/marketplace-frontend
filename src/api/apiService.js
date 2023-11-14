@@ -108,6 +108,15 @@ export const createService = (data) => {
     });
 }
 
+export const editService = (classId, data) => {
+  return axiosInstance
+    .patch(`/services/${classId}`, data)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
 export const getClassDetails = (classId) => {
   return axiosInstance
     .get(`/services/${classId}`)

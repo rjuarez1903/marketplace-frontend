@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from "./InputField";
-import { createService } from "../api/apiService";
 
 const CreateClassForm = ({ initialValues, onSubmit }) => {
   const validationSchema = Yup.object({
@@ -36,22 +35,7 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
   const formik = useFormik({
     initialValues: initialValues || defaultValues,
     validationSchema,
-    onSubmit: async (values, { setSubmitting, setStatus }) => {
-      try {
-        console.log(values);
-        setSubmitting(true);
-        const response = await createService(values);
-        console.log(response);
-      } catch (error) {
-        if (error.response.data.errors) {
-          setStatus(error.response.data.errors);
-        } else {
-          setStatus([{ message: "Error desconocido al iniciar sesión." }]);
-        }
-      } finally {
-        setSubmitting(false);
-      }
-    },
+    onSubmit, 
   });
 
   return (
