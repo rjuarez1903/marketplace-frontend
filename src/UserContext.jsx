@@ -1,17 +1,18 @@
-import { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { apiLogin, apiRegister, validateToken } from './api/apiService';
+import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { apiLogin, apiRegister, validateToken } from "./api/apiService";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkTokenValidity = async () => {
-      const storedUser = localStorage.getItem('user');
-      const storedToken = localStorage.getItem('jwt');
+      const storedUser = localStorage.getItem("user");
+      const storedToken = localStorage.getItem("jwt");
       if (storedUser && storedToken) {
         try {
           const isValid = await validateToken(JSON.parse(storedToken).token);
@@ -21,10 +22,11 @@ export const UserProvider = ({ children }) => {
             logout();
           }
         } catch (error) {
-          console.error('Error al validar el token:', error);
+          console.error("Error al validar el token:", error);
           logout();
         }
       }
+      setLoading(false); 
     };
     checkTokenValidity();
   }, []);
@@ -35,7 +37,7 @@ export const UserProvider = ({ children }) => {
       setSession(response.user);
       return response;
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      console.error("Error al iniciar sesión:", error);
       throw error;
     }
   };
@@ -46,20 +48,22 @@ export const UserProvider = ({ children }) => {
       setSession(response.user);
       return response;
     } catch (error) {
-      console.error('Error al registrarse:', error);
+      console.error("Error al registrarse:", error);
       throw error;
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('user');
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
     setSession(null);
-    navigate('/');
+    navigate("/");
   };
 
   return (
-    <UserContext.Provider value={{ session, setSession, login, register, logout }}>
+    <UserContext.Provider
+      value={{ session, setSession, login, register, logout, loading }}
+    >
       {children}
     </UserContext.Provider>
   );

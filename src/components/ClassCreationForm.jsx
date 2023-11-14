@@ -1,36 +1,57 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import InputField from "./InputField";
+import { createService } from "../api/apiService";
 
 const CreateClassForm = ({ initialValues, onSubmit }) => {
   const validationSchema = Yup.object({
-    name: Yup.string().required("El nombre de la clase es requerido"),
-    description: Yup.string().required("La descripción es requerida"),
+    name: Yup.string()
+      .required("El nombre de la clase es requerido")
+      .max(50, "El nombre de la clase debe tener menos de 50 caracteres"),
+    description: Yup.string()
+      .required("La descripción es requerida")
+      .max(255, "La descripción debe tener menos de 255 caracteres"),
     category: Yup.string().required("La categoría es requerida"),
     frequency: Yup.string().required("La frecuencia es requerida"),
     cost: Yup.number()
       .required("El costo es requerido")
-      .min(0.99, "El costo mínimo es de 0.99")
-      .max(4, "El costo máximo es de 4"),
+      .min(0.99, "El costo mínimo es de $0.99"),
     type: Yup.string().required("El tipo es requerido"),
     duration: Yup.number()
       .required("La duración es requerida")
-      .min(0.5, "La duración mínima es de 0.5"),
+      .min(0.5, "La duración mínima es de 30 minutos")
+      .max(4, "La duración máxima es de 4 horas"),
   });
 
   const defaultValues = {
     name: "",
     description: "",
-    category: "Programación",
+    category: "programacion",
     frequency: "unique",
     cost: 0.99,
     type: "individual",
-    duration: 30,
+    duration: 0.5,
   };
 
   const formik = useFormik({
     initialValues: initialValues || defaultValues,
     validationSchema,
-    onSubmit,
+    onSubmit: async (values, { setSubmitting, setStatus }) => {
+      try {
+        console.log(values);
+        setSubmitting(true);
+        const response = await createService(values);
+        console.log(response);
+      } catch (error) {
+        if (error.response.data.errors) {
+          setStatus(error.response.data.errors);
+        } else {
+          setStatus([{ message: "Error desconocido al iniciar sesión." }]);
+        }
+      } finally {
+        setSubmitting(false);
+      }
+    },
   });
 
   return (
@@ -39,28 +60,14 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
         onSubmit={formik.handleSubmit}
         className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
       >
+        <InputField
+          label="Nombre de la Clase"
+          id="name"
+          name="name"
+          type="text"
+          formik={formik}
+        />
         <div>
-          <label htmlFor="name" className="font-inter text-sm text-gray-600">
-            Nombre de la Clase:
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className={`border rounded p-2 w-full ${
-              formik.touched.name && formik.errors.name
-                ? "border-red-500"
-                : "border-gray-300"
-            }`}
-          />
-          {formik.touched.name && formik.errors.name ? (
-            <div className="text-red-600 text-sm">{formik.errors.name}</div>
-          ) : null}
-        </div>
-        <div className="my-4">
           <label
             htmlFor="description"
             className="font-inter text-sm text-gray-600"
@@ -81,7 +88,7 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
             }`}
           ></textarea>
           {formik.touched.description && formik.errors.description ? (
-            <div className="text-red-600 text-sm">
+            <div className="text-red-600 text-xs">
               {formik.errors.description}
             </div>
           ) : null}
@@ -108,7 +115,7 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
             <option value="matematica">Matemática</option>
           </select>
           {formik.touched.category && formik.errors.category ? (
-            <div className="text-red-600 text-sm">{formik.errors.category}</div>
+            <div className="text-red-600 text-xs">{formik.errors.category}</div>
           ) : null}
         </div>
 
@@ -132,30 +139,19 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
             <option value="monthly">Mensual</option>
           </select>
           {formik.touched.frequency && formik.errors.frequency ? (
-            <div className="text-red-600 text-sm">
+            <div className="text-red-600 text-xs">
               {formik.errors.frequency}
             </div>
           ) : null}
         </div>
 
-        <div>
-          <label htmlFor="cost" className="font-inter text-sm text-gray-600">
-            Costo ($0.99 como mínimo):
-          </label>
-          <input
-            type="number"
-            id="cost"
-            name="cost"
-            value={formik.values.cost}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            step="0.01"
-          />
-          {formik.touched.cost && formik.errors.cost ? (
-            <div className="text-red-600 text-sm">{formik.errors.cost}</div>
-          ) : null}
-        </div>
+        <InputField
+          label="Costo ($0.99 como mínimo)"
+          id="cost"
+          name="cost"
+          type="number"
+          formik={formik}
+        />
 
         <div>
           <label htmlFor="type" className="font-inter text-sm text-gray-600">
@@ -173,75 +169,56 @@ const CreateClassForm = ({ initialValues, onSubmit }) => {
             <option value="group">Grupo</option>
           </select>
           {formik.touched.type && formik.errors.type ? (
-            <div className="text-red-600 text-sm">{formik.errors.type}</div>
+            <div className="text-red-600 text-xs">{formik.errors.type}</div>
           ) : null}
         </div>
-
-        {/* <div>
-          <label
-            htmlFor="duration"
-            className="font-inter text-sm text-gray-600"
-          >
-            Duración (mínimo 0.5 horas):
-          </label>
-          <input
-            type="number"
-            id="duration"
-            name="duration"
-            value={formik.values.duration}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            step="0.01"
-          />
-          {formik.touched.duration && formik.errors.duration ? (
-            <div className="text-red-600 text-sm">{formik.errors.duration}</div>
-          ) : null}
-        </div> */}
 
         <div>
           <label
             htmlFor="duration"
             className="font-inter text-sm text-gray-600"
           >
-            Duración (mínimo 30 minutos):
+            Duración (mínimo 30 minutos)
           </label>
-          <div className="flex items-center">
-            <input
-              type="number"
-              id="duration"
-              name="duration"
-              value={formik.values.duration}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="border border-gray-300 rounded p-2 w-full"
-              min="1"
-              step="1"
-            />
-            <select
-              id="timeUnit"
-              name="timeUnit"
-              value={formik.values.timeUnit}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className="ml-2 border border-gray-300 rounded p-2"
-            >
-              <option value="minutes">Minutos</option>
-              <option value="hours">Horas</option>
-            </select>
-          </div>
+          <select
+            id="duration"
+            name="duration"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.duration}
+            className="border border-gray-300 rounded p-2 w-full"
+          >
+            <option value="0.5">30 minutos</option>
+            <option value="1">1 hora</option>
+            <option value="1.5">1 hora y media</option>
+            <option value="2">2 horas</option>
+            <option value="2.5">2 horas y media</option>
+            <option value="3">3 horas</option>
+            <option value="3.5">3 horas y media</option>
+            <option value="4">4 horas</option>
+          </select>
           {formik.touched.duration && formik.errors.duration ? (
-            <div className="text-red-600 text-sm">{formik.errors.duration}</div>
+            <div className="text-red-500 text-xs">{formik.errors.duration}</div>
           ) : null}
         </div>
 
-        <div className="flex-end my-4">
+        {formik.status && Array.isArray(formik.status) && (
+          <div className="text-red-500 text-xs p-3 bg-red-100 rounded-md">
+            <ul>
+              {formik.status.map((err, index) => (
+                <li key={index}>{err.message || err.msg}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div className="flex-end mx-3 mb-5 gap-4">
           <button
             type="submit"
             disabled={formik.isSubmitting}
-            className="px-5 py-1.5 text-sm bg-primary-orange rounded-md text-white"
+            className="px-5 py-1.5 text-sm bg-primary-orange rounded-md text-white uppercase"
           >
-            Enviar
+            {formik.isSubmitting ? "Enviando..." : "Enviar"}
           </button>
         </div>
       </form>

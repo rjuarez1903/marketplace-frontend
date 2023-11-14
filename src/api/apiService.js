@@ -99,6 +99,15 @@ export const getPublicUserData = (userId) => {
     });
 };
 
+export const createService = (data) => {
+  return axiosInstance
+    .post("/services", data)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
 export const getClassDetails = (classId) => {
   return axiosInstance
     .get(`/services/${classId}`)
