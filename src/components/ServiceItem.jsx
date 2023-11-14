@@ -54,14 +54,14 @@ const ServiceItem = (props) => {
         </button>
         {myClass.isPublished ? (
           <button
-            onClick={() => onUnpublish(service.id)}
+            onClick={() => onUnpublish(myClass.id)}
             className="bg-gray-500 text-white px-5 py-1.5 rounded-md hover:bg-gray-600 focus:outline-none font-inter text-sm transition-all w-auto"
           >
             <VisibilityOff /> Despublicar
           </button>
         ) : (
           <button
-            onClick={() => onPublish(service.id)}
+            onClick={() => onPublish(myClass.id)}
             className="bg-green-500 text-white px-5 py-1.5 rounded-md hover:bg-green-600 focus:outline-none font-inter text-sm transition-all w-auto"
           >
             <Visibility /> Publicar

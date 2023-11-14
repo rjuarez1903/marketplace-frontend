@@ -9,6 +9,7 @@ import DialogBox from "../components/DialogBox";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { editService } from "../api/apiService";
 
 const MyClasses = () => {
   const [myClasses, setMyClasses] = useState([]);
@@ -63,12 +64,33 @@ const MyClasses = () => {
     }
   };
 
-  const handlePublish = (serviceId) => {
-    // Implementa la lógica para publicar un servicio
+  const handlePublish = async (classId) => {
+    try {
+      const classToPublish = myClasses.find((c) => c._id === classId);
+      const { name, description, category, frequency, cost, type, duration } = classToPublish
+      console.log(classToPublish);
+      if (classToPublish) {
+        await editService(classId, {name, description, category, frequency, cost, type, duration, isPublished: true });
+        const updatedClassesData = await getServicesByUser();
+        setMyClasses(updatedClassesData);
+      }
+    } catch (error) {
+      console.error("Error al publicar la clase.", error);
+    }
   };
 
-  const handleUnpublish = (serviceId) => {
-    // Implementa la lógica para despublicar un servicio
+  const handleUnpublish = async (classId) => {
+    try {
+      const classToUnpublish = myClasses.find((c) => c._id === classId);
+      const { name, description, category, frequency, cost, type, duration } = classToUnpublish
+      if (classToUnpublish) {
+        await editService(classId, { name, description, category, frequency, cost, type, duration, isPublished: false });
+        const updatedClassesData = await getServicesByUser();
+        setMyClasses(updatedClassesData);
+      }
+    } catch (error) {
+      console.error("Error al despublicar la clase.", error);
+    }
   };
 
   if (loading) {
@@ -81,9 +103,9 @@ const MyClasses = () => {
             <ServiceItem
               myClass={myClass}
               onEdit={() => handleEdit(myClass)}
-              onDelete={() => openConfirmationDialog(myClass._id)} // Ensure this line is correct
-              onPublish={handlePublish}
-              onUnpublish={handleUnpublish}
+              onDelete={() => openConfirmationDialog(myClass._id)}
+              onPublish={() => handlePublish(myClass._id)}
+              onUnpublish={() => handleUnpublish(myClass._id)}
             />
           </li>
         ))}
