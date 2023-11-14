@@ -11,7 +11,7 @@ const TeacherProfile = ({
         <img
           src={
             profileImgUrl === ""
-              ? "../public/assets/images/dummyAvatar.jpeg"
+              ? "../../assets/images/dummyAvatar.jpeg"
               : profileImgUrl
           }
           className="border rounded-full h-28 w-28 object-cover"
