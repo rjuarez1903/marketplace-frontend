@@ -24,7 +24,7 @@ export const apiRegister = (data) => {
     .catch((error) => {
       throw error.response.data;
     });
-}
+};
 
 export const requestPasswordReset = (email) => {
   return axiosInstance
@@ -33,7 +33,7 @@ export const requestPasswordReset = (email) => {
     .catch((error) => {
       throw error;
     });
-}
+};
 
 export const resetPassword = ({ token, password }) => {
   return axiosInstance
@@ -42,8 +42,7 @@ export const resetPassword = ({ token, password }) => {
     .catch((error) => {
       throw error;
     });
-}
-
+};
 
 export const validateToken = (token) => {
   return axiosInstance
@@ -106,7 +105,7 @@ export const createService = (data) => {
     .catch((error) => {
       throw error;
     });
-}
+};
 
 export const editService = (classId, data) => {
   return axiosInstance
@@ -115,7 +114,7 @@ export const editService = (classId, data) => {
     .catch((error) => {
       throw error;
     });
-}
+};
 
 export const getClassDetails = (classId) => {
   return axiosInstance
@@ -162,18 +161,29 @@ export const updateServiceContract = (classId, data) => {
     });
 };
 
-
 export const uploadImage = (file) => {
   const formData = new FormData();
-  formData.append("file", file); 
+  formData.append("file", file);
   return axiosInstance
     .patch(`/users/profileImage`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     })
     .then((response) => response.data)
     .catch((error) => {
       throw error;
+    });
+};
+
+export const updateUser = (data) => {
+  return axiosInstance
+    .patch("/users", data)
+    .then((response) => {
+      localStorage.setItem("user", JSON.stringify(response.data.leanUser));
+      return response.data;
+    })
+    .catch((error) => {
+      throw error.response.data;
     });
 };
