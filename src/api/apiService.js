@@ -143,6 +143,15 @@ export const getServiceContracts = (classId) => {
     });
 };
 
+export const createServiceContract = (classId, data) => {
+  return axiosInstance
+    .post(`/serviceContracts/${classId}`, data)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
 export const getServiceContractsByUser = () => {
   return axiosInstance
     .get(`/serviceContracts/user`)

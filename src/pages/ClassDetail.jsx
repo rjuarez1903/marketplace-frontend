@@ -38,7 +38,9 @@ export const ClassDetail = () => {
     } else if (buttonType === "consult") {
       setDialogTitle("Consultar");
       setDialogContent(
-        <Form onSuccess={() => handleSuccess("Consulta enviada con éxito!")} />
+        <Form onSuccess={() => handleSuccess("Consulta enviada con éxito!")}
+              classId={id}
+        />
       );
     }
   };
