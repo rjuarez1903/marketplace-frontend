@@ -1,6 +1,7 @@
 import { translateOption } from "../utils/translateOption";
 import { formatDecimalToTime } from "../utils/formatDecimalToTime";
 import StarRating from "./StarRating";
+import TeacherProfile from "./TeacherProfile";
 
 const ServiceDetail = (props) => {
   return (
@@ -28,15 +29,13 @@ const ServiceDetail = (props) => {
         #{props.category}
       </p>
       <div className="mt-4">
-        <p className="font-inter text-sm text-gray-400">
-          Docente: {props.teacherFirstName} {props.teacherLastName}
-        </p>
-        <p className="font-inter text-sm text-gray-400">
-          Título: {props.teacherDegree}
-        </p>
-        <p className="font-inter text-sm text-gray-400">
-          Experiencia: {props.teacherExperience}
-        </p>
+        <TeacherProfile
+          profileImgUrl={props.profileImgUrl}
+          teacherFirstName={props.teacherFirstName}
+          teacherLastName={props.teacherLastName}
+          teacherDegree={props.teacherDegree}
+          teacherExperience={props.teacherExperience}
+        />  
         <div className="flex justify-end gap-2 mt-4 w-auto ml-auto">
           <button className="outline_btn" onClick={props.onCommentClick}>
             Comentar

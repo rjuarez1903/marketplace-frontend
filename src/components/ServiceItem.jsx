@@ -5,7 +5,6 @@ import { formatDecimalToTime } from "../utils/formatDecimalToTime";
 import { NavLink } from "react-router-dom";
 
 const ServiceItem = (props) => {
-  // destructure myClass from props
   const { myClass, onEdit, onDelete, onPublish, onUnpublish } = props;
   return (
     <div className="prompt_card">

@@ -91,6 +91,7 @@ export const ClassDetail = () => {
             teacherFirstName={user.firstName}
             teacherLastName={user.lastName}
             teacherDegree={user.degree}
+            profileImgUrl={user.profileImgUrl}
             teacherExperience={user.experience}
             onCommentClick={() => handleClick("comment")}
             onConsultClick={() => handleClick("consult")}

@@ -18,8 +18,7 @@ const ClassEdit = () => {
   const onSubmit = async (values, { setSubmitting, setStatus }) => {
     try {
       setSubmitting(true);
-      const response = await editService(myClass._id, values);
-      console.log(response);
+      await editService(myClass._id, values);
     } catch (error) {
       if (error.response.data.errors) {
         setStatus(error.response.data.errors);
