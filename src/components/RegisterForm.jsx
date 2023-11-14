@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserContext } from "../UserContext";
+import InputField from "./InputField";
 
 const RegisterForm = () => {
   const { register } = useContext(UserContext);
@@ -20,7 +21,9 @@ const RegisterForm = () => {
       email: Yup.string()
         .email("Ingresa un correo electrónico válido")
         .required("El correo electrónico es obligatorio"),
-      phoneNumber: Yup.string().required("El teléfono es obligatorio"), // Puedes añadir validaciones específicas para teléfonos si lo deseas
+      phoneNumber: Yup.string()
+        .matches(/^\+?[1-9]\d{1,14}$/, "Ingresa un número de teléfono válido")
+        .required("El teléfono es obligatorio"),
       password: Yup.string().required("La contraseña es obligatoria"),
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
@@ -30,6 +33,7 @@ const RegisterForm = () => {
         const response = await register(values);
         console.log(response);
         // Si quieres navegar a otro lugar después del registro, puedes hacerlo aquí
+        // navigate('/mi-perfil');
       } catch (error) {
         if (error.errors) {
           setStatus(error.errors);
@@ -52,114 +56,41 @@ const RegisterForm = () => {
         onSubmit={formik.handleSubmit}
         className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
       >
-        <div>
-          <label
-            htmlFor="firstName"
-            className="font-inter text-sm text-gray-600"
-          >
-            Nombre:
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={formik.values.firstName}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            required
-          />
-          {formik.touched.firstName && formik.errors.firstName && (
-            <div className="text-red-500 text-xs">
-              {formik.errors.firstName}
-            </div>
-          )}
-        </div>
-
-        <div>
-          <label
-            htmlFor="lastName"
-            className="font-inter text-sm text-gray-600"
-          >
-            Apellido:
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={formik.values.lastName}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            required
-          />
-          {formik.touched.lastName && formik.errors.lastName && (
-            <div className="text-red-500 text-xs">{formik.errors.lastName}</div>
-          )}
-        </div>
-
-        <div>
-          <label htmlFor="email" className="font-inter text-sm text-gray-600">
-            Correo Electrónico:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            required
-          />
-          {formik.touched.email && formik.errors.email && (
-            <div className="text-red-500 text-xs">{formik.errors.email}</div>
-          )}
-        </div>
-
-        <div>
-          <label
-            htmlFor="phoneNumber"
-            className="font-inter text-sm text-gray-600"
-          >
-            Teléfono:
-          </label>
-          <input
-            type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={formik.values.tel}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            required
-          />
-          {formik.touched.tel && formik.errors.tel && (
-            <div className="text-red-500 text-xs">{formik.errors.tel}</div>
-          )}
-        </div>
-
-        <div>
-          <label
-            htmlFor="password"
-            className="font-inter text-sm text-gray-600"
-          >
-            Contraseña:
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            required
-          />
-          {formik.touched.password && formik.errors.password && (
-            <div className="text-red-500 text-xs">{formik.errors.password}</div>
-          )}
-        </div>
+        <InputField
+          label="Nombre"
+          id="firstName"
+          name="firstName"
+          type="text"
+          formik={formik}
+        />
+        <InputField
+          label="Apellido"
+          id="lastName"
+          name="lastName"
+          type="text"
+          formik={formik}
+        />
+        <InputField
+          label="Correo Electrónico"
+          id="email"
+          name="email"
+          type="email"
+          formik={formik}
+        />
+        <InputField
+          label="Teléfono"
+          id="tel"
+          name="phoneNumber"
+          type="phoneNumber"
+          formik={formik}
+        />
+        <InputField
+          label="Contraseña"
+          id="password"
+          name="password"
+          type="password"
+          formik={formik}
+        />
 
         {formik.status && Array.isArray(formik.status) && (
           <div className="text-red-500 text-xs p-3 bg-red-100 rounded-md">

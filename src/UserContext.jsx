@@ -44,7 +44,6 @@ export const UserProvider = ({ children }) => {
     try {
       const response = await apiRegister(userData);
       setSession(response.user);
-      navigate('/mi-perfil');
       return response;
     } catch (error) {
       console.error('Error al registrarse:', error);

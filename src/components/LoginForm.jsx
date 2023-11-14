@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { UserContext } from "../UserContext";
+import InputField from "./InputField";
 
 const LoginForm = () => {
   const { login } = useContext(UserContext);
@@ -29,7 +30,9 @@ const LoginForm = () => {
       } catch (error) {
         console.error("Error al iniciar sesión:", error);
         setStatus(
-          error.errors[0].message || error.errors[0].msg || "Error desconocido al iniciar sesión."
+          error.errors[0].message ||
+            error.errors[0].msg ||
+            "Error desconocido al iniciar sesión."
         );
       } finally {
         setSubmitting(false);
@@ -43,64 +46,32 @@ const LoginForm = () => {
         <h1 className="head_text text-left">
           <span className="blue_gradient">Login</span>
         </h1>
-        
+
         <form
           onSubmit={formik.handleSubmit}
           className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
         >
-          <div>
-            <label htmlFor="email" className="font-inter text-sm text-gray-600">
-              Correo Electrónico:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formik.values.email}
-              onChange={(e) => {
-                formik.handleChange(e);
-                formik.setStatus(null);
-              }}
-              onBlur={formik.handleBlur}
-              className="border border-gray-300 rounded p-2 w-full"
-              required
-            />
-            {formik.touched.email && formik.errors.email ? (
-              <div className="text-red-500 text-xs">{formik.errors.email}</div>
-            ) : null}
-          </div>
+          
+          <InputField
+            label="Correo Electrónico"
+            id="email"
+            name="email"
+            type="email"
+            formik={formik}
+          />
+          <InputField
+            label="Contraseña"
+            id="password"
+            name="password"
+            type="password"
+            formik={formik}
+          />
 
-          <div>
-            <label
-              htmlFor="password"
-              className="font-inter text-sm text-gray-600"
-            >
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formik.values.password}
-              onChange={(e) => {
-                formik.handleChange(e);
-                formik.setStatus(null);
-              }}
-              onBlur={formik.handleBlur}
-              className="border border-gray-300 rounded p-2 w-full"
-            />
-            {formik.touched.password && formik.errors.password ? (
-              <div className="text-red-500 text-xs">
-                {formik.errors.password}
-              </div>
-            ) : null}
-          </div>
           <div className="text-right">
             <button
               type="button"
               onClick={() => navigate("/solicitud-restablecer-password")}
               className="text-sm text-blue-500 hover:underline"
-
             >
               ¿Olvidaste tu contraseña?
             </button>
