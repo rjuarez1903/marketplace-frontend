@@ -13,6 +13,19 @@ export const apiLogin = (data) => {
     });
 };
 
+export const apiRegister = (data) => {
+  return axiosInstance
+    .post("/auth/register", data)
+    .then((response) => {
+      localStorage.setItem("jwt", JSON.stringify(response.data.jwt));
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+      return response.data;
+    })
+    .catch((error) => {
+      throw error.response.data;
+    });
+}
+
 export const requestPasswordReset = (email) => {
   return axiosInstance
     .post("/auth/requestPasswordReset", { email })

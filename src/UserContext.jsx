@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiLogin, validateToken } from './api/apiService';
+import { apiLogin, apiRegister, validateToken } from './api/apiService';
 
 export const UserContext = createContext();
 
@@ -40,6 +40,18 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const register = async (userData) => {
+    try {
+      const response = await apiRegister(userData);
+      setSession(response.user);
+      navigate('/mi-perfil');
+      return response;
+    } catch (error) {
+      console.error('Error al registrarse:', error);
+      throw error;
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('user');
@@ -48,7 +60,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ session, setSession, login, logout }}>
+    <UserContext.Provider value={{ session, setSession, login, register, logout }}>
       {children}
     </UserContext.Provider>
   );
