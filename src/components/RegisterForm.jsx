@@ -1,4 +1,5 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { UserContext } from "../UserContext";
@@ -6,6 +7,7 @@ import InputField from "./InputField";
 
 const RegisterForm = () => {
   const { register } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -32,8 +34,7 @@ const RegisterForm = () => {
         setSubmitting(true);
         const response = await register(values);
         console.log(response);
-        // Si quieres navegar a otro lugar después del registro, puedes hacerlo aquí
-        // navigate('/mi-perfil');
+        navigate('/mi-perfil');
       } catch (error) {
         if (error.errors) {
           setStatus(error.errors);

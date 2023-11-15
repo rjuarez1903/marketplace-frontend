@@ -1,4 +1,5 @@
 import { useContext, useCallback, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ImageUploadSection from "../components/ImageUploadSection";
 import { UserContext } from "../UserContext";
 import { updateUser, uploadImage } from "../api/apiService";
@@ -24,6 +25,7 @@ const Profile = () => {
     message: "",
     type: "success",
   });
+  const navigate = useNavigate();
 
   const handleImageSelected = useCallback((file) => {
     setSelectedImage(file);
@@ -65,6 +67,7 @@ const Profile = () => {
       const response = await updateUser(values);
       console.log(response);
       setSession({ ...session, ...values });
+      navigate("/mis-clases");
     } catch (error) {
       console.error(error);
       throw error;

@@ -1,5 +1,3 @@
-// RequestPasswordReset.jsx
-
 import { useState } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +27,7 @@ const RequestPasswordReset = () => {
           "Si tu cuenta existe, te hemos enviado un enlace para restablecer tu contraseña."
         );
         setOpenSnackbar(true);
-        // navigate("/");
+        // navigate("/mis-clases");
       } catch (error) {
         setSnackbarMessage(
           "Ha ocurrido un error. Por favor intenta más tarde."
