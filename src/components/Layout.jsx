@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import NavBar from "./Nav/NavBar";
 import Footer from "./Footer";
+import { SnackbarContext } from '../SnackbarContext';
+import CustomSnackbar from './CustomSnackbar';
 
 const Layout = ({ children }) => {
+  const { snackbar, closeSnackbar } = useContext(SnackbarContext);
+
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
@@ -12,6 +17,12 @@ const Layout = ({ children }) => {
       <div className="mt-auto">
         <Footer />
       </div>
+      <CustomSnackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        type={snackbar.type}
+        onClose={closeSnackbar}
+      />
     </div>
   );
 };
