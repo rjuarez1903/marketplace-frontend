@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import ClassCreationForm from "../components/ClassCreationForm";
 import { editService } from "../api/apiService";
+import { SnackbarContext } from "../SnackbarContext";
 
 const ClassEdit = () => {
+  const navigate = useNavigate();
   const location = useLocation();
+  const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
   const myClass = location.state.myClass;
   const initialValues = {
     name: myClass.name,
@@ -20,14 +24,17 @@ const ClassEdit = () => {
     try {
       setSubmitting(true);
       await editService(myClass._id, values);
+      openSnackbar("Clase editada con éxito.", "success");
     } catch (error) {
       if (error.response.data.errors) {
         setStatus(error.response.data.errors);
       } else {
         setStatus([{ message: "Error desconocido al editar la clase." }]);
       }
+      openSnackbar("Error al editar la clase.", "error");
     } finally {
       setSubmitting(false);
+      navigate("/mis-clases");
     }
   };
 

@@ -13,7 +13,6 @@ const Profile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [uploadMessage, setUploadMessage] = useState("");
   const [formData, setFormData] = useState({
     firstName: session.firstName || "",
     lastName: session.lastName || "",
@@ -21,16 +20,10 @@ const Profile = () => {
     degree: session.degree || "",
     experience: session.experience || "",
   });
-  // const [snackbar, setSnackbar] = useState({
-  //   open: false,
-  //   message: "",
-  //   type: "success",
-  // });
   const navigate = useNavigate();
 
   const handleImageSelected = useCallback((file) => {
     setSelectedImage(file);
-    setUploadMessage("");
   }, []);
 
   const handleSubmit = async () => {
@@ -66,10 +59,6 @@ const Profile = () => {
       actions.setSubmitting(false);
     }
   };
-
-  // const handleCloseSnackbar = () => {
-  //   setSnackbar({ ...snackbar, open: false });
-  // };
 
   useEffect(() => {
     document.title = "EduHub | Mi perfil";
@@ -115,12 +104,6 @@ const Profile = () => {
                 />
               }
             />
-            {/* <CustomSnackbar
-              open={snackbar.open}
-              message={snackbar.message}
-              type={snackbar.type}
-              onClose={handleCloseSnackbar}
-            /> */}
           </div>
           <div className="mt-5 lg:mt-0 col-span-9">
             <ProfileForm
