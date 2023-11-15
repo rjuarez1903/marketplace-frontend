@@ -34,12 +34,20 @@ export const ClassDetail = () => {
     setIsDialogOpen(true);
     if (buttonType === "comment") {
       setDialogTitle("Comentar");
-      setDialogContent(<CommentForm />);
+      setDialogContent(
+        <CommentForm
+          onSuccess={() => handleSuccess("Comentario enviado con éxito")}
+          onError={() => handleError("Error al enviar el comentario")}
+          classId={id}
+        />
+      );
     } else if (buttonType === "consult") {
       setDialogTitle("Consultar");
       setDialogContent(
-        <Form onSuccess={() => handleSuccess("Consulta enviada con éxito!")}
-              classId={id}
+        <Form
+          onSuccess={() => handleSuccess("Consulta enviada con éxito")}
+          onError={() => handleError("Error al enviar la consulta")}
+          classId={id}
         />
       );
     }
@@ -47,6 +55,11 @@ export const ClassDetail = () => {
 
   const handleSuccess = (message) => {
     setSnackbar({ open: true, message: message, type: "success" });
+    setIsDialogOpen(false);
+  };
+
+  const handleError = (message) => {
+    setSnackbar({ open: true, message: message, type: "error" });
     setIsDialogOpen(false);
   };
 

@@ -125,6 +125,15 @@ export const getClassDetails = (classId) => {
     });
 };
 
+export const createComment = (classId, data) => {
+  return axiosInstance
+    .post(`/comments/${classId}`, data)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+}
+
 export const getUnblockedComments = (classId) => {
   return axiosInstance
     .get(`/comments/${classId}`)

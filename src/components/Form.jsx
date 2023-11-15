@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import InputField from "./InputField";
 import { createServiceContract } from "../api/apiService";
 
-const Form = ({ onSuccess, classId }) => {
+const Form = ({ onSuccess, onError, classId }) => {
   const validationSchema = Yup.object({
     contactEmail: Yup.string()
       .email("Ingresa un correo electrónico válido")
@@ -29,12 +29,12 @@ const Form = ({ onSuccess, classId }) => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        console.log(values);
         const response = await createServiceContract(classId, values);
         console.log(response);
         onSuccess();
       } catch (error) {
         console.error(error);
+        onError();
       } finally {
         formik.setSubmitting(false);
       }
