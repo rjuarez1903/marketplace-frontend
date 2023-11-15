@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Feature from "../components/Feature";
 import TestimonialCard from "../components/TestimonialCard";
@@ -8,6 +9,10 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import AccordionItem from "../components/AccordionItem";
 
 export const Home = () => {
+  useEffect(() => {
+    document.title = "EduHub | Inicio";
+  }, []);
+
   return (
     <div>
       <section className="w-full flex-center flex-col px-5 container mx-auto">

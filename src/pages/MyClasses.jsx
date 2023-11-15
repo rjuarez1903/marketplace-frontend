@@ -31,6 +31,10 @@ const MyClasses = () => {
     fetchMyClasses();
   }, []);
 
+  useEffect(() => {
+    document.title = "EduHub | Mis clases";
+  }, []);
+
   let content = null;
 
   const openConfirmationDialog = (serviceId) => {

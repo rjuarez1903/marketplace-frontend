@@ -83,6 +83,10 @@ export const ClassDetail = () => {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    document.title = "EduHub | Detalle de la clase";
+  }, []);
+
   return (
     <div className="container mx-auto px-5">
       {loading ? (

@@ -23,6 +23,10 @@ const ServiceContracts = () => {
     fetchContracts();
   }, []);
 
+  useEffect(() => {
+    document.title = "EduHub | Contrataciones";
+  }, []);
+  
   let content = null;
 
   if (loading) {

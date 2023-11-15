@@ -49,6 +49,7 @@ const Classes = () => {
     };
     fetchServices();
   }, [category]);
+
   useEffect(() => {
     const applyFilters = () => {
       const { classType: filterClassType, frequency: filterFrequency } = filter;
@@ -83,6 +84,10 @@ const Classes = () => {
 
     applyFilters();
   }, [filter, services, sortOrder, searchText]);
+
+  useEffect(() => {
+    document.title = "EduHub | Clases";
+  }, []);
 
   useEffect(() => {
     const filteredBySearchAndCategory = services.filter((service) => {

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import CreateClassForm from "../components/ClassCreationForm";
 import { createService } from "../api/apiService";
 
@@ -18,6 +19,10 @@ export const ClassCreation = () => {
       setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    document.title = "EduHub | Creá tu clase";
+  }, []);
 
   return (
     <div className="container mx-auto px-5">

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ClassCreationForm from "../components/ClassCreationForm";
 import { editService } from "../api/apiService";
@@ -29,6 +30,10 @@ const ClassEdit = () => {
       setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    document.title = "EduHub | Editá tu clase";
+  }, []);
 
   return (
     <div className="container mx-auto px-5">

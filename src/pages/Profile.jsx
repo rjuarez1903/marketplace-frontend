@@ -1,4 +1,4 @@
-import { useContext, useCallback, useState } from "react";
+import { useContext, useCallback, useState, useEffect } from "react";
 import ImageUploadSection from "../components/ImageUploadSection";
 import { UserContext } from "../UserContext";
 import { updateUser, uploadImage } from "../api/apiService";
@@ -76,6 +76,10 @@ const Profile = () => {
   const handleCloseSnackbar = () => {
     setSnackbar({ ...snackbar, open: false });
   };
+
+  useEffect(() => {
+    document.title = "EduHub | Mi perfil";
+  }, []);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);

@@ -24,6 +24,10 @@ const Comments = () => {
     fetchComments();
   }, [id]);
 
+  useEffect(() => {
+    document.title = "EduHub | Comentarios";
+  }, []);
+
   let content = null;
 
   if (loading) {
