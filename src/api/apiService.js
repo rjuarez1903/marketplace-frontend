@@ -132,7 +132,16 @@ export const createComment = (classId, data) => {
     .catch((error) => {
       throw error;
     });
-}
+};
+
+export const updateComment = (commentId, data) => {
+  return axiosInstance
+    .patch(`/comments/${commentId}`, data)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
 
 export const getUnblockedComments = (classId) => {
   return axiosInstance
@@ -159,7 +168,7 @@ export const createServiceContract = (classId, data) => {
     .catch((error) => {
       throw error;
     });
-}
+};
 
 export const getServiceContractsByUser = () => {
   return axiosInstance

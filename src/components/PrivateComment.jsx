@@ -6,6 +6,7 @@ const PrivateComment = ({
   rating,
   content,
   isBlocked,
+  loading,
   onToggleBlock,
 }) => {
   return (
@@ -21,8 +22,12 @@ const PrivateComment = ({
       <p>{content}</p>
       <div>
         <div className="flex flex-end">
-          <button onClick={onToggleBlock} className="mt-2 outline_btn">
-            {isBlocked ? "Desbloquear" : "Bloquear"}
+          <button
+            onClick={onToggleBlock}
+            disabled={loading}
+            className="mt-2 outline_btn"
+          >
+            {loading ? "Cargando..." : isBlocked ? "Desbloquear" : "Bloquear"}
           </button>
         </div>
       </div>

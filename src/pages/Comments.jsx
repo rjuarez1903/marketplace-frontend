@@ -5,10 +5,13 @@ import Loader from "../components/Loader/Loader";
 import { getUnblockedComments } from "../api/apiService";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import PrivateComment from "../components/PrivateComment";
+import { updateComment } from "../api/apiService";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingToggles, setLoadingToggles] = useState({});
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -19,10 +22,28 @@ const Comments = () => {
         setLoading(false);
       } catch (error) {
         console.error(error);
-      }
+      } 
     };
     fetchComments();
   }, [id]);
+
+  const toggleBlockComment = async (commentId, isCurrentlyBlocked) => {
+    try {
+      setLoadingToggles(prev => ({ ...prev, [commentId]: true }));
+      const updatedComment = await updateComment(commentId, { isBlocked: !isCurrentlyBlocked });
+      console.log(updatedComment);
+      setComments(comments.map(comment => {
+        if (comment._id === commentId) {
+          return { ...comment, isBlocked: !isCurrentlyBlocked };
+        }
+        return comment;
+      }));
+    } catch (error) {
+      console.error("Error al actualizar el comentario:", error);
+    } finally {
+      setLoadingToggles(prev => ({ ...prev, [commentId]: false }));
+    }
+  };
 
   useEffect(() => {
     document.title = "EduHub | Comentarios";
@@ -43,6 +64,8 @@ const Comments = () => {
                 content={comment.content}
                 rating={comment.rating || 1}
                 isBlocked={comment.isBlocked}
+                loading={loadingToggles[comment._id]}
+                onToggleBlock={() => toggleBlockComment(comment._id, comment.isBlocked)}
               />
             }
           </li>
