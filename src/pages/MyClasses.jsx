@@ -100,9 +100,11 @@ const MyClasses = () => {
         });
         const updatedClassesData = await getServicesByUser();
         setMyClasses(updatedClassesData);
+        openSnackbar("Clase publicada con éxito.", "success");
       }
     } catch (error) {
       console.error("Error al publicar la clase.", error);
+      openSnackbar("Error al publicar la clase.", "error");
     }
   };
 
@@ -124,9 +126,11 @@ const MyClasses = () => {
         });
         const updatedClassesData = await getServicesByUser();
         setMyClasses(updatedClassesData);
+        openSnackbar("Clase despublicada con éxito.", "success");
       }
     } catch (error) {
       console.error("Error al despublicar la clase.", error);
+      openSnackbar("Error al despublicar la clase.", "error");
     }
   };
 
