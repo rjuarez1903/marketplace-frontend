@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
-import CustomSnackbar from "./CustomSnackbar";
 import { resetPassword } from "../api/apiService";
+import { SnackbarContext } from "../SnackbarContext";
 import queryString from "query-string";
+import InputField from "./InputField";
 
 const PasswordResetForm = () => {
-  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -22,39 +23,31 @@ const PasswordResetForm = () => {
     validationSchema: Yup.object({
       password: Yup.string()
         .required("La contraseña es obligatoria")
-        .min(6, "La contraseña debe tener al menos 6 caracteres"),
+        .min(8, "La contraseña debe tener al menos 8 caracteres"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Las contraseñas deben coincidir")
         .required("Confirmar contraseña es obligatorio"),
     }),
     onSubmit: async (values, { setSubmitting }) => {
-      if (!token) {
-        setSnackbarMessage("Token no encontrado");
-        setOpenSnackbar(true);
-        return;
-      }
       setSubmitting(true);
       try {
         await resetPassword({ token, password: values.password });
         setSnackbarMessage("Contraseña restablecida con éxito");
-        setOpenSnackbar(true);
-        navigate("/login"); 
+        openSnackbar("Contraseña restablecida con éxito", "success");
+        navigate("/login");
       } catch (error) {
-        setSnackbarMessage(
-          error.response.data.message || "Error al restablecer contraseña"
-        );
-        setOpenSnackbar(true);
+        console.log(error);
+        openSnackbar("Error al restablecer la contraseña", "error");
       } finally {
         setSubmitting(false);
       }
     },
   });
 
-  // Verificar si el token existe cuando el componente se monta
   useEffect(() => {
     if (!token) {
-      setSnackbarMessage("Token inválido o expirado");
-      setOpenSnackbar(true);
+      openSnackbar("Token inválido", "error");
+      navigate("/login");
     }
   }, [token]);
 
@@ -67,51 +60,22 @@ const PasswordResetForm = () => {
         onSubmit={formik.handleSubmit}
         className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
       >
-        {/* Inputs para nueva contraseña y confirmación */}
-        <div>
-          <label
-            htmlFor="password"
-            className="font-inter text-sm text-gray-600"
-          >
-            Nueva Contraseña:
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            required
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <div className="text-red-500 text-xs">{formik.errors.password}</div>
-          ) : null}
-        </div>
-        <div>
-          <label
-            htmlFor="confirmPassword"
-            className="font-inter text-sm text-gray-600"
-          >
-            Confirmar Nueva Contraseña:
-          </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="border border-gray-300 rounded p-2 w-full"
-            required
-          />
-          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <div className="text-red-500 text-xs">
-              {formik.errors.confirmPassword}
-            </div>
-          ) : null}
-        </div>
+        <InputField
+          label="Nueva Contraseña"
+          id="password"
+          name="password"
+          type="password"
+          formik={formik}
+        />
+
+        <InputField
+          label="Confirmar Nueva Contraseña"
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          formik={formik}
+        />
+
         <div className="flex-end mx-3 mb-5 gap-4">
           <button
             type="submit"
@@ -122,12 +86,6 @@ const PasswordResetForm = () => {
           </button>
         </div>
       </form>
-      <CustomSnackbar
-        message={snackbarMessage}
-        type="success"
-        open={openSnackbar}
-        onClose={() => setOpenSnackbar(false)}
-      />
     </section>
   );
 };
