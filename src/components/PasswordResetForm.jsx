@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useLocation } from "react-router-dom";
@@ -9,6 +10,7 @@ import queryString from "query-string";
 const PasswordResetForm = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const navigate = useNavigate();
   const { search } = useLocation();
   const { token } = queryString.parse(search);
 
@@ -36,7 +38,7 @@ const PasswordResetForm = () => {
         await resetPassword({ token, password: values.password });
         setSnackbarMessage("Contraseña restablecida con éxito");
         setOpenSnackbar(true);
-        // navigate("/login"); // Opcional: redireccionar al login
+        navigate("/login"); 
       } catch (error) {
         setSnackbarMessage(
           error.response.data.message || "Error al restablecer contraseña"

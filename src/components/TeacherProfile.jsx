@@ -7,14 +7,14 @@ const TeacherProfile = ({
 }) => {
   return (
     <div className="flex flex-col lg:flex-row gap-4">
-      <div>
+      <div className="aspect-w-1 aspect-h-1 w-28">
         <img
           src={
             profileImgUrl === ""
               ? "../../assets/images/dummyAvatar.jpeg"
               : profileImgUrl
           }
-          className="border rounded-full h-28 w-28 object-cover"
+          className="object-cover rounded-full"
         />
       </div>
       <div className="flex flex-col justify-center">

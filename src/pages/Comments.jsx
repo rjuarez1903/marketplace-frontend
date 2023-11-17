@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import MessageWithIcon from "../components/MessageWithIcon";
 import Loader from "../components/Loader/Loader";
-import { getUnblockedComments } from "../api/apiService";
+import { getAllComments } from "../api/apiService";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import PrivateComment from "../components/PrivateComment";
 import { updateComment } from "../api/apiService";
+import { SnackbarContext } from "../SnackbarContext";
 
 const Comments = () => {
+  const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingToggles, setLoadingToggles] = useState({});
@@ -17,7 +19,7 @@ const Comments = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const commentsData = await getUnblockedComments(id);
+        const commentsData = await getAllComments(id);
         setComments(commentsData.comments);
         setLoading(false);
       } catch (error) {
@@ -38,8 +40,10 @@ const Comments = () => {
         }
         return comment;
       }));
+      openSnackbar("Comentario actualizado correctamente.", "success");
     } catch (error) {
       console.error("Error al actualizar el comentario:", error);
+      openSnackbar("Error al actualizar el comentario.", "error");
     } finally {
       setLoadingToggles(prev => ({ ...prev, [commentId]: false }));
     }

@@ -143,6 +143,15 @@ export const updateComment = (commentId, data) => {
     });
 };
 
+export const getAllComments = (classId) => {
+  return axiosInstance
+    .get(`/comments/${classId}/all`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
 export const getUnblockedComments = (classId) => {
   return axiosInstance
     .get(`/comments/${classId}`)

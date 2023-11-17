@@ -11,7 +11,7 @@ const PrivateComment = ({
 }) => {
   return (
     <div
-      className={`glassmorphism text-gray-700 ${isBlocked ? "opacity-50" : ""}`}
+      className="glassmorphism text-gray-700"
     >
       <h3 className="font-bold mb-1">
         {moment(createdAt).format("DD/MM/YYYY HH:mm")}
@@ -20,7 +20,7 @@ const PrivateComment = ({
         <StarRating rating={rating} />
       </div>
       <p>{content}</p>
-      <div>
+      {content !== "" && (
         <div className="flex flex-end">
           <button
             onClick={onToggleBlock}
@@ -30,7 +30,7 @@ const PrivateComment = ({
             {loading ? "Cargando..." : isBlocked ? "Desbloquear" : "Bloquear"}
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 };
