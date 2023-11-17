@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../UserContext";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -7,6 +9,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 const MobileNav = ({ session }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const { logout } = useContext(UserContext);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -14,6 +17,11 @@ const MobileNav = ({ session }) => {
 
   const closeDropdown = () => {
     setShowDropdown(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    closeDropdown();
   };
 
   useEffect(() => {
@@ -36,13 +44,17 @@ const MobileNav = ({ session }) => {
 
   return (
     <div className="sm:hidden relative">
-      {session?.user ? (
+      {session ? (
         <button
           onClick={toggleDropdown}
           className="flex items-center gap-2 focus:outline-none"
         >
           <img
-            src="/assets/images/profile.jpg"
+            src={
+              session.profileImgUrl === ""
+                ? "../public/assets/images/dummyAvatar.jpeg"
+                : session.profileImgUrl
+            }
             width={37}
             height={37}
             className="rounded-full"
@@ -91,7 +103,7 @@ const MobileNav = ({ session }) => {
           >
             Matemática
           </NavLink>
-          {session?.user ? (
+          {session ? (
             <>
               <NavLink
                 to="/mis-clases"
@@ -115,7 +127,7 @@ const MobileNav = ({ session }) => {
                 Mi Perfil
               </NavLink>
               <button
-                onClick={closeDropdown}
+                onClick={handleLogout}
                 className="py-3 text-gray-700 w-full hover:text-orange-600 text-3xl"
               >
                 <span className="mr-2">Salir</span>

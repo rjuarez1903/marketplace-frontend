@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Feature from "../components/Feature";
 import TestimonialCard from "../components/TestimonialCard";
@@ -8,11 +9,15 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import AccordionItem from "../components/AccordionItem";
 
 export const Home = () => {
+  useEffect(() => {
+    document.title = "EduHub | Inicio";
+  }, []);
+
   return (
     <div>
       <section className="w-full flex-center flex-col px-5 container mx-auto">
         <h1 className="head_text text-center">
-          Aprendé a programar
+          Aprendé
           <br />
           <span className="orange_gradient text-center">
             con los mejores profesores
@@ -34,11 +39,13 @@ export const Home = () => {
                 <span className="gradient">¿Qué es EduHub?</span>
               </h2>
               <p className="desc text-left text-lg">
-                EduHub es una plataforma que te permite encontrar profesores de
-                programación. Podés encontrar clases de programación en vivo y
-                en directo, explorar nuevas ideas, tendencias y prácticas de
-                programación y aprender con los mejores profesores a un precio
-                accesible.
+                EduHub es una plataforma integral que te permite encontrar
+                profesores expertos en programación, idiomas, música y
+                matemática. Podés acceder a clases,
+                explorar nuevas ideas, tendencias y prácticas en cada área, y
+                aprender con los mejores a un precio accesible. Descubrí una
+                forma flexible y dinámica de adquirir nuevos conocimientos y
+                habilidades en los campos que más te interesan.
               </p>
               <div className="flex gap-3 mt-3">
                 <NavLink className="outline_btn " to="/clases/programacion">
@@ -96,12 +103,12 @@ export const Home = () => {
           <TestimonialCard
             src="../public/assets/images/testimonial2.jpg"
             name="Marina Calandra"
-            review="Buena plataforma, pero algunas clases son caras. Sería genial tener más opciones de precios bajos."
+            review="¡EduHub es insuperable! Ofrece clases de todo tipo y con docentes de primera. La calidad de enseñanza es de nivel premium. ¡Sumamente satisfecho con mi experiencia!"
           />
           <TestimonialCard
             src="../public/assets/images/testimonial3.jpg"
             name="Yamil Ventura"
-            review="Me encanta este marketplace educativo. Encontré clases de música asequibles y el profesor es genial. ¡Volveré por más!"
+            review="Me encanta este marketplace educativo. Encontré clases de matemática super accesibles y el profe es genial."
           />
         </div>
       </section>

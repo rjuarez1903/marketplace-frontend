@@ -1,20 +1,20 @@
 import axios from "axios";
 
-const jwt = JSON.parse(localStorage.getItem("jwt"));
-
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:4000/api/v1", 
-  timeout: 5000, 
+  baseURL: "http://localhost:4000/api/v1",
+  timeout: 5000,
   headers: {
-    "Content-Type": "application/json", 
+    "Content-Type": "application/json",
   },
   withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
   async (config) => {
+    const jwt = JSON.parse(localStorage.getItem("jwt"));
     config.headers = {
-      Authorization: `Bearer ${jwt?.token} || ''`,
+      ...config.headers,
+      Authorization: jwt ? `Bearer ${jwt.token}` : "",
     };
     return config;
   },
@@ -22,4 +22,5 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 export default axiosInstance;

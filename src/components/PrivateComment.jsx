@@ -6,11 +6,12 @@ const PrivateComment = ({
   rating,
   content,
   isBlocked,
+  loading,
   onToggleBlock,
 }) => {
   return (
     <div
-      className={`glassmorphism text-gray-700 ${isBlocked ? "opacity-50" : ""}`}
+      className="glassmorphism text-gray-700"
     >
       <h3 className="font-bold mb-1">
         {moment(createdAt).format("DD/MM/YYYY HH:mm")}
@@ -19,13 +20,17 @@ const PrivateComment = ({
         <StarRating rating={rating} />
       </div>
       <p>{content}</p>
-      <div>
+      {content !== "" && (
         <div className="flex flex-end">
-          <button onClick={onToggleBlock} className="mt-2 outline_btn">
-            {isBlocked ? "Desbloquear" : "Bloquear"}
+          <button
+            onClick={onToggleBlock}
+            disabled={loading}
+            className="mt-2 outline_btn"
+          >
+            {loading ? "Cargando..." : isBlocked ? "Desbloquear" : "Bloquear"}
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import MobileNav from "./MobileNav";
 import DesktopNav from "./DesktopNav";
+import { UserContext } from "../../UserContext";
 
 const NavBar = () => {
-  const [session, setSession] = useState({ user: 'Rodrigo' });
-  // const [session, setSession] = useState(null);
+  const { session } = useContext(UserContext);
   return (
     <nav className="bg-white shadow-lg py-3">
       <div className="container mx-auto px-5 flex justify-between items-center">

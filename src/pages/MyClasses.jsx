@@ -1,19 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteService, getServicesByUser } from "../api/apiService";
-import ServiceDetail from "../components/ServiceDetail";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import Loader from "../components/Loader/Loader";
 import MessageWithIcon from "../components/MessageWithIcon";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import SimplifiedServiceDetail from "../components/SimplifiedServiceDetail";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 import ServiceItem from "../components/ServiceItem";
 import DialogBox from "../components/DialogBox";
 import ConfirmationDialog from "../components/ConfirmationDialog";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { editService } from "../api/apiService";
+import { SnackbarContext } from "../SnackbarContext";
 
 const MyClasses = () => {
   const [myClasses, setMyClasses] = useState([]);
+  const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
   const [loading, setLoading] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const [selectedServiceId, setSelectedServiceId] = useState(null);
   const navigate = useNavigate();
@@ -31,6 +34,10 @@ const MyClasses = () => {
     fetchMyClasses();
   }, []);
 
+  useEffect(() => {
+    document.title = "EduHub | Mis clases";
+  }, []);
+
   let content = null;
 
   const openConfirmationDialog = (serviceId) => {
@@ -45,31 +52,86 @@ const MyClasses = () => {
 
   const handleDeleteConfirmed = async () => {
     if (selectedServiceId) {
-      await handleDelete(selectedServiceId);
+      setIsDeleting(true);
+      try {
+        await handleDelete(selectedServiceId);
+        closeConfirmationDialog();
+      } catch (error) {
+        console.error("Error al eliminar la clase", error);
+        openSnackbar("Error al eliminar la clase.", "error");
+      } finally {
+        setIsDeleting(false);
+      }
     }
-    closeConfirmationDialog();
   };
 
   const handleEdit = (myClass) => {
     navigate(`/editar-clase/${myClass._id}`, { state: { myClass } });
   };
 
-  const handleDelete = async (serviceId) => {
+  const handleDelete = async (classId) => {
     try {
-      await deleteService(serviceId);
+      await deleteService(classId);
       const updatedClassesData = await getServicesByUser();
       setMyClasses(updatedClassesData);
+      openSnackbar("Clase eliminada con éxito.", "success");
     } catch (error) {
       console.error("Error deleting service:", error);
+      openSnackbar("Error al eliminar la clase.", "error");
     }
   };
 
-  const handlePublish = (serviceId) => {
-    // Implementa la lógica para publicar un servicio
+  const handlePublish = async (classId) => {
+    try {
+      const classToPublish = myClasses.find((c) => c._id === classId);
+      const { name, description, category, frequency, cost, type, duration } =
+        classToPublish;
+      console.log(classToPublish);
+      if (classToPublish) {
+        await editService(classId, {
+          name,
+          description,
+          category,
+          frequency,
+          cost,
+          type,
+          duration,
+          isPublished: true,
+        });
+        const updatedClassesData = await getServicesByUser();
+        setMyClasses(updatedClassesData);
+        openSnackbar("Clase publicada con éxito.", "success");
+      }
+    } catch (error) {
+      console.error("Error al publicar la clase.", error);
+      openSnackbar("Error al publicar la clase.", "error");
+    }
   };
 
-  const handleUnpublish = (serviceId) => {
-    // Implementa la lógica para despublicar un servicio
+  const handleUnpublish = async (classId) => {
+    try {
+      const classToUnpublish = myClasses.find((c) => c._id === classId);
+      const { name, description, category, frequency, cost, type, duration } =
+        classToUnpublish;
+      if (classToUnpublish) {
+        await editService(classId, {
+          name,
+          description,
+          category,
+          frequency,
+          cost,
+          type,
+          duration,
+          isPublished: false,
+        });
+        const updatedClassesData = await getServicesByUser();
+        setMyClasses(updatedClassesData);
+        openSnackbar("Clase despublicada con éxito.", "success");
+      }
+    } catch (error) {
+      console.error("Error al despublicar la clase.", error);
+      openSnackbar("Error al despublicar la clase.", "error");
+    }
   };
 
   if (loading) {
@@ -82,9 +144,9 @@ const MyClasses = () => {
             <ServiceItem
               myClass={myClass}
               onEdit={() => handleEdit(myClass)}
-              onDelete={() => openConfirmationDialog(myClass._id)}  // Ensure this line is correct
-              onPublish={handlePublish}
-              onUnpublish={handleUnpublish}
+              onDelete={() => openConfirmationDialog(myClass._id)}
+              onPublish={() => handlePublish(myClass._id)}
+              onUnpublish={() => handleUnpublish(myClass._id)}
             />
           </li>
         ))}
@@ -101,7 +163,6 @@ const MyClasses = () => {
           }
           message="Todavía no creaste ninguna clase"
         />
-        <button className="black_btn mt-5">Crear Clase</button>
       </div>
     );
   }
@@ -113,6 +174,7 @@ const MyClasses = () => {
       </h1>
       <div className="flex justify-end mb-5">
         <NavLink to="/crear-clase" className="black_btn w-auto">
+          <PostAddIcon className="mr-2" />
           Crear Clase
         </NavLink>
       </div>
@@ -126,6 +188,7 @@ const MyClasses = () => {
               message="¿Estás seguro de que quieres eliminar este servicio?"
               onConfirm={handleDeleteConfirmed}
               onClose={closeConfirmationDialog}
+              isProcessing={isDeleting}
             />
           }
         />

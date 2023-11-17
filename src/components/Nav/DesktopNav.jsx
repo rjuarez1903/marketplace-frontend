@@ -1,9 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
+import { UserContext } from "../../UserContext";
 
 const DesktopNav = ({ session }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const { logout } = useContext(UserContext);
   const dropdownRef = useRef(null);
   const location = useLocation();
 
@@ -73,10 +75,9 @@ const DesktopNav = ({ session }) => {
           >
             Matemática
           </NavLink>
-          {/* Agrega más enlaces de categorías aquí */}
         </div>
       </div>
-      {session?.user ? (
+      {session ? (
         <div className="flex gap-3 md:gap-5">
           <NavLink
             to="/mis-clases"
@@ -90,7 +91,11 @@ const DesktopNav = ({ session }) => {
           >
             Contrataciones
           </NavLink>
-          <button type="button" className="outline_btn flex items-center">
+          <button
+            type="button"
+            className="outline_btn flex items-center"
+            onClick={logout}
+          >
             <span className="mr-2">Salir</span>
             <LogoutIcon />
           </button>
@@ -99,7 +104,11 @@ const DesktopNav = ({ session }) => {
             className="flex items-center font-bold text-gray-700 hover:text-orange-600"
           >
             <img
-              src="/assets/images/profile.jpg"
+              src={
+                session.profileImgUrl === ""
+                  ? "../public/assets/images/dummyAvatar.jpeg"
+                  : session.profileImgUrl
+              }
               width={37}
               height={37}
               className="rounded-full"
