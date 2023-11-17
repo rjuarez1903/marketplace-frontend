@@ -18,7 +18,9 @@ const LoginForm = () => {
       email: Yup.string()
         .email("Ingresa un correo electrónico válido")
         .required("El correo electrónico es obligatorio"),
-      password: Yup.string().required("La contraseña es obligatoria"),
+      password: Yup.string()
+        .required("La contraseña es obligatoria")
+        .min(8, "La contraseña debe tener al menos 8 caracteres"),
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
@@ -51,7 +53,6 @@ const LoginForm = () => {
           onSubmit={formik.handleSubmit}
           className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism mx-auto"
         >
-          
           <InputField
             label="Correo Electrónico"
             id="email"

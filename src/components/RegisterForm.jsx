@@ -26,7 +26,9 @@ const RegisterForm = () => {
       phoneNumber: Yup.string()
         .matches(/^\+?[1-9]\d{1,14}$/, "Ingresa un número de teléfono válido")
         .required("El teléfono es obligatorio"),
-      password: Yup.string().required("La contraseña es obligatoria"),
+      password: Yup.string()
+        .required("La contraseña es obligatoria")
+        .min(8, "La contraseña debe tener al menos 8 caracteres"),
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
@@ -34,7 +36,7 @@ const RegisterForm = () => {
         setSubmitting(true);
         const response = await register(values);
         console.log(response);
-        navigate('/mi-perfil');
+        navigate("/mi-perfil");
       } catch (error) {
         if (error.errors) {
           setStatus(error.errors);
