@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
@@ -13,9 +13,10 @@ import { getClassDetails } from "../api/apiService";
 import { getUnblockedComments } from "../api/apiService";
 import Form from "../components/Form";
 import { CommentForm } from "../components/CommentForm";
-import CustomSnackbar from "../components/CustomSnackbar";
+import { SnackbarContext } from "../SnackbarContext";
 
 export const ClassDetail = () => {
+  const { openSnackbar, closeSnackbar } = useContext(SnackbarContext);
   const [classDetail, setClassDetail] = useState(null);
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState(null);
@@ -23,11 +24,6 @@ export const ClassDetail = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogContent, setDialogContent] = useState("");
   const [dialogTitle, setDialogTitle] = useState("");
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    type: "success",
-  });
   const { id } = useParams();
 
   const handleClick = (buttonType) => {
@@ -53,13 +49,19 @@ export const ClassDetail = () => {
     }
   };
 
-  const handleSuccess = (message) => {
-    setSnackbar({ open: true, message: message, type: "success" });
+  const handleSuccess = async (message) => {
+    openSnackbar(message, "success");
     setIsDialogOpen(false);
+    try {
+      const commentsData = await getUnblockedComments(id);
+      setComments(commentsData.comments);
+    } catch (error) {
+      console.error("Error fetching updated comments:", error);
+    }
   };
 
   const handleError = (message) => {
-    setSnackbar({ open: true, message: message, type: "error" });
+    openSnackbar(message, "error");
     setIsDialogOpen(false);
   };
 
@@ -122,12 +124,6 @@ export const ClassDetail = () => {
             onConfirm={() => setIsDialogOpen(false)}
             open={isDialogOpen}
           />
-          <CustomSnackbar
-            message={snackbar.message}
-            type={snackbar.type}
-            open={snackbar.open}
-            onClose={() => setSnackbar({ ...snackbar, open: false })}
-          />
           <h2 className="mb-5 sub_text text-left">
             <span className="green_gradient">Comentarios</span>
           </h2>
@@ -149,13 +145,13 @@ export const ClassDetail = () => {
                       <h3 className="font-bold mb-1">
                         {moment(comment.createdAt).format("DD/MM/YYYY HH:mm")}
                       </h3>
-                      <StarRating rating={comment.rating || 1} />
+                      <StarRating rating={comment.rating} />
                     </div>
                   ) : (
                     <Comment
                       createdAt={comment.createdAt}
                       content={comment.content}
-                      rating={comment.rating || 1}
+                      rating={comment.rating}
                     />
                   )}
                 </li>

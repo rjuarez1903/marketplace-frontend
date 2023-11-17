@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import MessageWithIcon from "../components/MessageWithIcon";
 import Loader from "../components/Loader/Loader";
-import { getUnblockedComments } from "../api/apiService";
+import { getAllComments } from "../api/apiService";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import PrivateComment from "../components/PrivateComment";
 import { updateComment } from "../api/apiService";
@@ -19,7 +19,7 @@ const Comments = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const commentsData = await getUnblockedComments(id);
+        const commentsData = await getAllComments(id);
         setComments(commentsData.comments);
         setLoading(false);
       } catch (error) {
