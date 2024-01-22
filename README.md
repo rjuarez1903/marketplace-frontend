@@ -1,6 +1,6 @@
 # EduHub Frontend - README
 
-Este es el frontend para EduHub, una plataforma de servicios en línea que permite a los usuarios ofrecer y buscar servicios. Este frontend proporciona una interfaz de usuario interactiva y amigable para acceder a todas las funcionalidades ofrecidas por el backend de EduHub.
+Éste es el frontend para EduHub, una plataforma de servicios en línea que permite a los usuarios ofrecer y buscar servicios. Este frontend proporciona una interfaz de usuario interactiva y amigable para acceder a todas las funcionalidades ofrecidas por el backend de EduHub.
 
 ## Funcionalidades Clave
 
